@@ -1,0 +1,37 @@
+\section{Marco conceptual}
+
+En esta sección se explican los conceptos clave que se utilizan a lo largo del proyecto. La intención es brindar al lector una base de comprensión sobre los términos técnicos y teóricos, de forma que pueda seguir el desarrollo del trabajo con mayor facilidad.
+
+\subsection{Procesamiento de Lenguaje Natural (PLN)}
+El Procesamiento de Lenguaje Natural (PLN) se refiere a la capacidad de las computadoras para interpretar, comprender y utilizar lenguajes humanos de forma efectiva. Esta área facilita tanto la creación de programas orientados a la manipulación y análisis de texto, como el diseño de modelos que simulan los procesos cognitivos del ser humano relacionados con el lenguaje~\cite{cortez2021pln}.
+
+\subsection{Embeddings Semánticos}
+
+Según Mikolov et al.~\cite{mikolov2013distributed}, los \textit{word embeddings} son representaciones vectoriales de palabras en un espacio continuo de múltiples dimensiones, donde cada dimensión refleja características o conceptos latentes compartidos por distintos términos. Esta forma de organización no se corresponde necesariamente con categorías semánticas explícitas definidas por los seres humanos, sino que responde a patrones internos aprendidos por el modelo. Por ejemplo, aunque palabras como ``rey'' y ``reina'' no sean sinónimos ni pertenezcan a una misma categoría gramatical, sus vectores resultan cercanos en el espacio de embeddings, reflejando una relación semántica implícita entre ambas.
+
+\subsection{Modelos Transformer}
+Los modelos Transformer constituyen una arquitectura de aprendizaje profundo diseñada para procesar secuencias de manera paralela, sin recurrir a estructuras recurrentes. Se basan en un mecanismo de atención que permite a cada elemento de la entrada ponderar la importancia de los demás elementos del conjunto, lo que facilita el aprendizaje de relaciones a largo plazo. Entre sus características más destacadas se encuentra el uso de la autoatención multicabeza, que mejora la capacidad del modelo para capturar patrones complejos desde múltiples perspectivas. Gracias a su eficiencia computacional y rendimiento sobresaliente, esta arquitectura se ha convertido en la base de los modelos de lenguaje más avanzados en la actualidad~\cite{garcia2021transformers}.
+
+\subsection{Inferencia Textual Natural (NLI)}
+La Inferencia Textual Natural (NLI, por sus siglas en inglés) es una tarea fundamental del Procesamiento de Lenguaje Natural que consiste en evaluar la relación lógica entre una premisa y una hipótesis. El objetivo es determinar si la hipótesis puede considerarse verdadera (\textit{entailment}), falsa (\textit{contradiction}), o indeterminada (\textit{neutral}) a partir del contenido de la premisa. Esta tarea también se conoce como Reconocimiento de la Implicación Textual (\textit{Recognizing Textual Entailment, RTE}) y suele utilizarse como prueba de referencia para evaluar el grado de comprensión del lenguaje de los modelos de PLN~\cite{bowman2015nli}.
+
+
+\subsection{Recuperación Aumentada por Generación (RAG)}
+La arquitectura RAG, por sus siglas en inglés (\textit{Retrieval-Augmented Generation}), se presenta como una solución eficaz para enriquecer las capacidades de los modelos de lenguaje de gran escala (LLM) sin necesidad de reentrenamiento. Su funcionamiento se basa en dos componentes principales: la indexación semántica de documentos mediante representaciones vectoriales, y el uso de la información recuperada como contexto adicional para que el modelo de lenguaje genere respuestas más precisas y confiables. Esta integración permite reducir la incidencia de errores o alucinaciones típicas de los LLM y adaptar sus respuestas a dominios específicos sin modificar sus parámetros base~\cite{sanchez2024rag}.
+
+
+\subsection{Corpus Científico y Verificación de Afirmaciones}
+La verificación automática de hechos requiere fuentes confiables. El corpus empleado corresponde al \textbf{informe de síntesis del Sexto Informe del IPCC} \cite{ipcc2023}, que proporciona información técnica validada sobre el cambio climático. Utilizar un corpus con estructura científica garantiza coherencia y confiabilidad en las inferencias.
+
+\subsection{Pipeline en PLN}
+Un pipeline de PLN es una secuencia estructurada de tareas de procesamiento lingüístico. En este trabajo, el pipeline incluye:
+
+\begin{enumerate}
+    \item Extracción y segmentación del corpus.
+    \item Resolución de correferencias.
+    \item Vectorización semántica.
+    \item Recuperación contextual.
+    \item Inferencia textual.
+\end{enumerate}
+
+Cada componente del pipeline está diseñado para preservar la coherencia semántica y facilitar la verificación lógica de afirmaciones externas.

@@ -1,0 +1,9 @@
+\section{Conclusión}
+
+Este trabajo presentó ClimateFact, un flujo basado en RAG para la verificación automatizada de afirmaciones sobre cambio climático contra fuentes científicas autorizadas. El sistema integra recuperación híbrida, inferencia de lenguaje natural y generación de explicaciones fundamentadas en un pipeline reproducible.
+
+La evaluación experimental demostró un sólido desempeño en la recuperación, con un recall de 0.91 para $k=5$, lo que indica que la evidencia relevante se recupera exitosamente en más del 90\% de los casos evaluados. El componente NLI alcanzó un F1-score de 0.975 para la clase CONTRADICTION, confirmando la efectividad del sistema en su tarea principal de detección de inconsistencias factuales.
+
+Sin embargo, el sistema exhibe una debilidad notable en la clasificación de la clase NEUTRAL, donde 97 de 120 casos neutrales fueron clasificados erróneamente como ENTAILMENT. Esta limitación, aunque no es crítica para la detección de contradicciones, reduce la confiabilidad del sistema como clasificador de alineación factual de propósito general.
+
+El trabajo futuro debe abordar la confusión NEUTRAL--ENTAILMENT mediante ajuste fino con datos NLI específicos del dominio, explorar estrategias de reranking más sofisticadas para mejorar la precisión de la recuperación, e investigar la integración de verificación multilingüe de afirmaciones para ampliar la aplicabilidad del sistema más allá de fuentes en idioma inglés.

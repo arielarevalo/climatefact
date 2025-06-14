@@ -1,0 +1,43 @@
+\section{Evaluación}
+
+La evaluación del sistema ClimateFact se estructura en torno a una metodología reproducible que permite medir la efectividad de cada componente del flujo de verificación. El proceso evaluativo se fundamenta en la construcción de un conjunto de referencia (\textit{gold set}) y la aplicación de métricas estándar para sistemas de recuperación de información y clasificación textual.
+
+\subsection{Construcción del conjunto de referencia}
+
+Se construyó un conjunto de referencia compuesto por 400 pares de afirmación-evidencia extraídos del corpus científico del IPCC. Cada entrada del conjunto incluye una afirmación sobre cambio climático y el identificador del pasaje que constituye la evidencia más relevante dentro de la base de conocimiento. La selección de estos pares se realizó mediante un proceso semi-automático que garantiza la correspondencia semántica entre afirmaciones y evidencia.
+
+Adicionalmente, se incorporaron casos de control que representan aproximadamente el 10\% del conjunto total. Estos casos incluyen: (i) afirmaciones sin evidencia correspondiente en el corpus, (ii) afirmaciones acompañadas de pasajes distractores que no proporcionan evidencia relevante, y (iii) afirmaciones deliberadamente ambiguas que permiten evaluar la robustez del sistema ante consultas imprecisas.
+
+Para la evaluación específica del componente de inferencia lógica, cada par afirmación-evidencia fue etiquetado manualmente según la relación lógica que establece el pasaje respecto a la afirmación: \textit{entailment} (la evidencia implica la afirmación), \textit{contradiction} (la evidencia contradice la afirmación), o \textit{neutral} (la evidencia no permite confirmar ni refutar la afirmación).
+
+\subsection{Métricas de evaluación de recuperación}
+
+La calidad del subsistema de recuperación se evalúa mediante métricas estándar de sistemas de recuperación de información, aplicadas para diferentes valores de \textit{k} (número de documentos recuperados):
+
+\begin{itemize}
+\item \textbf{Recall@k}: Fracción de evidencia relevante recuperada entre los primeros \textit{k} resultados.
+\item \textbf{Precision@k}: Fracción de documentos relevantes entre los \textit{k} documentos recuperados.
+\item \textbf{MRR@k}: Reciprocal rank medio, que mide la posición del primer documento relevante en el ranking.
+\item \textbf{nDCG@k}: Ganancia acumulativa descontada normalizada, que pondera la relevancia según la posición en el ranking.
+\end{itemize}
+
+Estas métricas se calculan de forma independiente para cada estrategia de recuperación (híbrida conceptual, semántica por embeddings, y combinación fusionada) con valores de \textit{k} $\in$ \{1, 3, 5, 10\}, permitiendo evaluar tanto la precisión como la exhaustividad del proceso de recuperación.
+
+\subsection{Métricas de evaluación de inferencia lógica}
+
+La efectividad del modelo de inferencia textual natural se evalúa mediante métricas de clasificación multiclase:
+
+\begin{itemize}
+\item \textbf{Exactitud global}: Fracción de predicciones correctas sobre el total de casos evaluados.
+\item \textbf{Precisión, Recall y F1-score por clase}: Calculadas independientemente para cada etiqueta de relación lógica.
+\item \textbf{Promedios macro y micro}: Agregación de métricas individuales para obtener una evaluación global del clasificador.
+\item \textbf{Matriz de confusión}: Análisis detallado de errores de clasificación entre categorías.
+\end{itemize}
+
+\subsection{Protocolo de evaluación}
+
+El protocolo de evaluación garantiza la reproducibilidad mediante la separación estricta entre datos de entrenamiento y evaluación. El conjunto de referencia se mantiene independiente de cualquier proceso de ajuste o calibración del sistema, asegurando una evaluación objetiva.
+
+La evaluación se ejecuta de forma automatizada mediante scripts que procesan el conjunto completo de casos de prueba, registran las predicciones del sistema, y calculan todas las métricas especificadas. Los resultados se almacenan en formato estructurado que facilita tanto el análisis estadístico como la generación de reportes detallados.
+
+Este enfoque metodológico permite identificar fortalezas y debilidades específicas en cada componente del sistema, proporcionando información valiosa para iteraciones futuras del desarrollo.

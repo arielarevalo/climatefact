@@ -1,0 +1,76 @@
+[project]
+name = "climatefact"
+version = "0.1.0"
+description = "A Streamlit application for detecting contradictions in climate-related statements"
+readme = "README.md"
+requires-python = ">=3.12, <3.14"
+dependencies = [
+    "langgraph==0.4.8",
+    "langgraph-prebuilt==0.2.2",
+    "langgraph-sdk==0.1.70",
+    "langgraph-checkpoint-sqlite==2.0.10",
+    "langsmith==0.3.45",
+    "langchain-community==0.3.25",
+    "langchain-core==0.3.66",
+    "langchain-openai==0.3.27",
+    "python-dotenv==1.0.1",
+    "notebook==7.4.3",
+    "trustcall==0.0.39",
+    "langgraph-cli[inmem]",
+    "spacy==3.8.7",
+    "nltk==3.9.1",
+    "streamlit==1.45.1"
+]
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.0"
+pytest-cov = ">=4.0"
+ruff = ">=0.8.0"
+
+[project.scripts]
+climatefact = "climatefact.cli:main"
+
+[tool.poetry]
+packages = [{include = "climatefact", from = "src"}]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "RUF", # ruff-specific rules
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+]
+markers = [
+    "unit: Unit tests that test a single class/module in isolation",
+    "integration: Integration tests with mocked external dependencies",
+    "e2e: End-to-end tests that test the full application",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,37 @@
+\section{Conceptual Framework}
+
+This section explains the key concepts used throughout the project. The intention is to provide the reader with a foundational understanding of the technical and theoretical terms, so they can follow the development of the work more easily.
+
+\subsection{Natural Language Processing (NLP)}
+Natural Language Processing (NLP) refers to the ability of computers to interpret, understand, and use human languages effectively. This field facilitates both the creation of programs oriented toward text manipulation and analysis, and the design of models that simulate cognitive processes related to human language~\cite{cortez2021pln}.
+
+\subsection{Semantic Embeddings}
+
+According to Mikolov et al.~\cite{mikolov2013distributed}, \textit{word embeddings} are vector representations of words in a continuous multi-dimensional space, where each dimension reflects latent features or concepts shared by different terms. This form of organization does not necessarily correspond to explicit semantic categories defined by humans, but rather responds to internal patterns learned by the model. For example, although words like ``king'' and ``queen'' are neither synonyms nor belong to the same grammatical category, their vectors are close in the embedding space, reflecting an implicit semantic relationship between them.
+
+\subsection{Transformer Models}
+Transformer models constitute a deep learning architecture designed to process sequences in parallel, without resorting to recurrent structures. They are based on an attention mechanism that allows each element of the input to weigh the importance of all other elements in the set, facilitating the learning of long-range relationships. Among their most notable features is the use of multi-head self-attention, which enhances the model's ability to capture complex patterns from multiple perspectives. Thanks to their computational efficiency and outstanding performance, this architecture has become the foundation of the most advanced language models today~\cite{garcia2021transformers}.
+
+\subsection{Natural Language Inference (NLI)}
+Natural Language Inference (NLI) is a fundamental task in Natural Language Processing that consists of evaluating the logical relationship between a premise and a hypothesis. The objective is to determine whether the hypothesis can be considered true (\textit{entailment}), false (\textit{contradiction}), or undetermined (\textit{neutral}) based on the content of the premise. This task is also known as Recognizing Textual Entailment (RTE) and is commonly used as a benchmark to evaluate the degree of language understanding of NLP models~\cite{bowman2015nli}.
+
+
+\subsection{Retrieval-Augmented Generation (RAG)}
+The RAG architecture (\textit{Retrieval-Augmented Generation}) serves as an effective solution for enriching the capabilities of large language models (LLMs) without the need for retraining. Its operation is based on two main components: semantic indexing of documents through vector representations, and the use of retrieved information as additional context for the language model to generate more accurate and reliable responses. This integration reduces the incidence of errors or hallucinations typical of LLMs and adapts their responses to specific domains without modifying their base parameters~\cite{sanchez2024rag}.
+
+
+\subsection{Scientific Corpus and Claim Verification}
+Automatic fact-checking requires reliable sources. The corpus used corresponds to the \textbf{Synthesis Report of the Sixth Assessment Report of the IPCC} \cite{ipcc2023}, which provides validated technical information on climate change. Using a corpus with a scientific structure ensures coherence and reliability in the inferences.
+
+\subsection{NLP Pipeline}
+An NLP pipeline is a structured sequence of linguistic processing tasks. In this work, the pipeline includes:
+
+\begin{enumerate}
+    \item Corpus extraction and segmentation.
+    \item Coreference resolution.
+    \item Semantic vectorization.
+    \item Contextual retrieval.
+    \item Textual inference.
+\end{enumerate}
+
+Each pipeline component is designed to preserve semantic coherence and facilitate the logical verification of external claims.

@@ -1,0 +1,11 @@
+\begin{abstract}
+Este proyecto presenta un flujo de verificación de hechos denominado ClimateFact, cuyo objetivo es evaluar afirmaciones relacionadas con el cambio climático utilizando bases de conocimiento científico confiables. Motivado por la prevalencia de la desinformación climática y la ausencia de herramientas de verificación accesibles y específicas del dominio, ClimateFact emplea generación aumentada por recuperación (RAG) para identificar y explicar inconsistencias entre afirmaciones y fuentes autorizadas como los informes del IPCC.
+
+El flujo genera una base de conocimiento mediante embeddings y un indexado basado en expresiones regulares informado por ontologías del dominio. Posteriormente, recupera pasajes relevantes a través de un pipeline de recuperación y re-ranking en múltiples etapas, seguido de un modelo de inferencia de lenguaje natural (NLI) para evaluar la alineación factual de las afirmaciones.
+
+Finalmente, un modelo de lenguaje genera explicaciones fundamentadas que señalan contradicciones con sus respectivas referencias. La metodología incluye pipelines de evaluación reproducibles para medir la precisión de la recuperación, la consistencia factual y la calidad de las explicaciones.
+\end{abstract}
+
+\begin{IEEEkeywords}
+verificación de hechos, cambio climático, RAG, NLI, generación aumentada por recuperación
+\end{IEEEkeywords}

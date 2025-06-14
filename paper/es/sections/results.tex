@@ -1,0 +1,94 @@
+\section{Resultados}
+
+La evaluación experimental del sistema ClimateFact se realizó sobre un conjunto de referencia de 400 casos de prueba, aplicando la metodología descrita en la sección anterior. Los resultados obtenidos se presentan organizados según los dos componentes principales del sistema: recuperación de evidencia e inferencia lógica textual.
+
+\subsection{Rendimiento del subsistema de recuperación}
+
+La evaluación del pipeline completo de recuperación, que integra búsqueda híbrida conceptual, recuperación semántica por embeddings y fusión de resultados, demuestra un rendimiento progresivamente mejorado conforme aumenta el número de documentos considerados. La Tabla~\ref{tab:retrieval_results} presenta los resultados obtenidos para diferentes valores de k.
+
+\begin{table}[htbp]
+\centering
+\caption{Métricas de rendimiento del subsistema de recuperación}
+\label{tab:retrieval_results}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{k} & \textbf{Recall} & \textbf{Precision} & \textbf{F1-Score} & \textbf{MRR} & \textbf{nDCG} \\
+\hline
+1 & 0.655 & 0.655 & 0.655 & 0.655 & 0.655 \\
+\hline
+3 & 0.865 & 0.355 & 0.483 & 0.751 & 0.845 \\
+\hline
+5 & 0.910 & 0.262 & 0.370 & 0.761 & 0.866 \\
+\hline
+10 & 0.938 & 0.184 & 0.252 & 0.765 & 0.876 \\
+\hline
+\end{tabular}
+\end{table}
+
+Para \textit{k=1}, el sistema alcanza un recall de 0.655, indicando que en aproximadamente dos tercios de los casos el documento más relevante se encuentra en la primera posición del ranking. La precisión coincide con el recall (0.655) dado que solo se considera un documento, resultando en un F1-score equivalente.
+
+Al expandir la búsqueda a \textit{k=3}, el recall se incrementa significativamente a 0.865, lo que demuestra que el 86.5\% de la evidencia relevante se recupera dentro de los tres primeros resultados. Sin embargo, la precisión desciende a 0.355 debido a la inclusión de documentos menos relevantes, resultando en un F1-score de 0.483.
+
+La tendencia se mantiene para \textit{k=5} y \textit{k=10}, con recalls de 0.91 y 0.9375 respectivamente, mientras que la precisión continúa disminuyendo (0.262 para \textit{k=5} y 0.184 para \textit{k=10}). Esta relación inversa entre recall y precisión es característica de sistemas de recuperación que priorizan la exhaustividad sobre la especificidad.
+
+Las métricas de ranking muestran resultados consistentes: el MRR@k se estabiliza alrededor de 0.76 para valores superiores a \textit{k=3}, indicando que el primer documento relevante típicamente se encuentra en las primeras tres posiciones. El nDCG@k progresa de 0.655 (\textit{k=1}) a 0.876 (\textit{k=10}), reflejando la capacidad del sistema para posicionar documentos relevantes en posiciones altas del ranking.
+
+\subsection{Rendimiento del modelo de inferencia lógica}
+
+La evaluación del componente NLI reveló un rendimiento diferenciado según la clase de relación lógica analizada. El modelo alcanzó una exactitud global de 0.615 sobre 400 predicciones, con variaciones significativas entre categorías. La Tabla~\ref{tab:nli_results} presenta las métricas detalladas por clase, mientras que la Tabla~\ref{tab:confusion_matrix} muestra la matriz de confusión correspondiente.
+
+\begin{table}[htbp]
+\centering
+\caption{Métricas de rendimiento del modelo NLI por clase}
+\label{tab:nli_results}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Clase} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\
+\hline
+ENTAILMENT & 0.524 & 0.675 & 0.590 \\
+\hline
+CONTRADICTION & 0.991 & 0.958 & 0.975 \\
+\hline
+NEUTRAL & 0.295 & 0.192 & 0.232 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Matriz de confusión del modelo NLI}
+\label{tab:confusion_matrix}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Verdadero \textbackslash Predicho} & \textbf{ENT} & \textbf{CON} & \textbf{NEU} \\
+\hline
+ENTAILMENT & 108 & 1 & 51 \\
+\hline
+CONTRADICTION & 1 & 115 & 4 \\
+\hline
+NEUTRAL & 97 & 0 & 23 \\
+\hline
+\end{tabular}
+\end{table}
+
+El análisis por clases evidencia disparidades notables en el rendimiento:
+
+\textbf{Clase CONTRADICTION}: Exhibe el mejor rendimiento con una precisión de 0.991, recall de 0.958 y F1-score de 0.975. De 120 casos verdaderos de contradicción, el modelo identificó correctamente 115, con solo 1 falso positivo y 4 falsos negativos.
+
+\textbf{Clase ENTAILMENT}: Muestra rendimiento intermedio con precisión de 0.524, recall de 0.675 y F1-score de 0.590. De 160 casos verdaderos de implicación, se identificaron correctamente 108, aunque el modelo generó 51 falsos negativos clasificados erróneamente como neutrales.
+
+\textbf{Clase NEUTRAL}: Presenta el rendimiento más deficiente con precisión de 0.295, recall de 0.192 y F1-score de 0.232. De 120 casos neutrales, solo 23 fueron clasificados correctamente, mientras que 97 se clasificaron incorrectamente como implicación.
+
+Los promedios macro resultantes son: precisión 0.604, recall 0.608 y F1-score 0.599, indicando un rendimiento moderado del clasificador con sesgo evidente hacia la detección de contradicciones.
+
+\subsection{Análisis de la matriz de confusión}
+
+La matriz de confusión revela patrones específicos de error en el modelo NLI. La confusión más frecuente ocurre entre las clases NEUTRAL y ENTAILMENT, donde 97 de 120 casos neutrales fueron clasificados erróneamente como implicación. Esta tendencia sugiere que el modelo tiende a interpretar relaciones neutras como evidencia de apoyo cuando existe solapamiento temático entre afirmación y evidencia.
+
+En contraste, la clase CONTRADICTION muestra excelente separabilidad, con confusión mínima respecto a las otras categorías (1 falso positivo y 4 falsos negativos), lo que indica que el modelo es particularmente efectivo para identificar inconsistencias directas entre afirmaciones y evidencia.
+
+\subsection{Cobertura del conjunto de referencia}
+
+El análisis del conjunto de datos revela que 726 de las 846 entradas totales (85.8\%) contienen etiquetas de inferencia lógica, con una distribución equilibrada entre las tres categorías: 241 casos de implicación, 241 de contradicción y 244 neutrales. Esta distribución balanceada en el conjunto completo contrasta con el subconjunto evaluado, donde se observa una ligera predominancia de casos de implicación (160) sobre contradicción (120) y neutralidad (120).
+
+Los resultados obtenidos establecen una línea base sólida para el sistema ClimateFact, identificando fortalezas en la recuperación de evidencia y la detección de contradicciones, así como áreas de mejora específicas en la clasificación de relaciones neutrales.

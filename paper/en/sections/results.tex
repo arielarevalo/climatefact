@@ -1,0 +1,94 @@
+\section{Results}
+
+The experimental evaluation of the ClimateFact system was conducted on a reference set of 400 test cases, applying the methodology described in the previous section. The results obtained are presented organized according to the two main system components: evidence retrieval and textual logical inference.
+
+\subsection{Retrieval subsystem performance}
+
+The evaluation of the complete retrieval pipeline, which integrates conceptual hybrid search, semantic embedding retrieval, and result fusion, demonstrates progressively improved performance as the number of considered documents increases. Table~\ref{tab:retrieval_results} presents the results obtained for different values of k.
+
+\begin{table}[htbp]
+\centering
+\caption{Retrieval subsystem performance metrics}
+\label{tab:retrieval_results}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{k} & \textbf{Recall} & \textbf{Precision} & \textbf{F1-Score} & \textbf{MRR} & \textbf{nDCG} \\
+\hline
+1 & 0.655 & 0.655 & 0.655 & 0.655 & 0.655 \\
+\hline
+3 & 0.865 & 0.355 & 0.483 & 0.751 & 0.845 \\
+\hline
+5 & 0.910 & 0.262 & 0.370 & 0.761 & 0.866 \\
+\hline
+10 & 0.938 & 0.184 & 0.252 & 0.765 & 0.876 \\
+\hline
+\end{tabular}
+\end{table}
+
+For \textit{k=1}, the system achieves a recall of 0.655, indicating that in approximately two-thirds of cases the most relevant document is found in the first ranking position. Precision coincides with recall (0.655) since only one document is considered, resulting in an equivalent F1-score.
+
+When expanding the search to \textit{k=3}, recall increases significantly to 0.865, demonstrating that 86.5\% of relevant evidence is retrieved within the top three results. However, precision decreases to 0.355 due to the inclusion of less relevant documents, resulting in an F1-score of 0.483.
+
+The trend continues for \textit{k=5} and \textit{k=10}, with recalls of 0.91 and 0.9375 respectively, while precision continues to decrease (0.262 for \textit{k=5} and 0.184 for \textit{k=10}). This inverse relationship between recall and precision is characteristic of retrieval systems that prioritize exhaustiveness over specificity.
+
+The ranking metrics show consistent results: MRR@k stabilizes around 0.76 for values above \textit{k=3}, indicating that the first relevant document is typically found within the top three positions. nDCG@k progresses from 0.655 (\textit{k=1}) to 0.876 (\textit{k=10}), reflecting the system's ability to position relevant documents in high-ranking positions.
+
+\subsection{Logical inference model performance}
+
+The evaluation of the NLI component revealed differentiated performance according to the class of logical relationship analyzed. The model achieved an overall accuracy of 0.615 over 400 predictions, with significant variations between categories. Table~\ref{tab:nli_results} presents the detailed per-class metrics, while Table~\ref{tab:confusion_matrix} shows the corresponding confusion matrix.
+
+\begin{table}[htbp]
+\centering
+\caption{NLI model performance metrics by class}
+\label{tab:nli_results}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\
+\hline
+ENTAILMENT & 0.524 & 0.675 & 0.590 \\
+\hline
+CONTRADICTION & 0.991 & 0.958 & 0.975 \\
+\hline
+NEUTRAL & 0.295 & 0.192 & 0.232 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{NLI model confusion matrix}
+\label{tab:confusion_matrix}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Actual \textbackslash Predicted} & \textbf{ENT} & \textbf{CON} & \textbf{NEU} \\
+\hline
+ENTAILMENT & 108 & 1 & 51 \\
+\hline
+CONTRADICTION & 1 & 115 & 4 \\
+\hline
+NEUTRAL & 97 & 0 & 23 \\
+\hline
+\end{tabular}
+\end{table}
+
+The per-class analysis reveals notable disparities in performance:
+
+\textbf{CONTRADICTION class}: Exhibits the best performance with a precision of 0.991, recall of 0.958, and F1-score of 0.975. Of 120 true contradiction cases, the model correctly identified 115, with only 1 false positive and 4 false negatives.
+
+\textbf{ENTAILMENT class}: Shows intermediate performance with precision of 0.524, recall of 0.675, and F1-score of 0.590. Of 160 true entailment cases, 108 were correctly identified, although the model generated 51 false negatives erroneously classified as neutral.
+
+\textbf{NEUTRAL class}: Presents the weakest performance with precision of 0.295, recall of 0.192, and F1-score of 0.232. Of 120 neutral cases, only 23 were correctly classified, while 97 were incorrectly classified as entailment.
+
+The resulting macro averages are: precision 0.604, recall 0.608, and F1-score 0.599, indicating moderate classifier performance with an evident bias toward contradiction detection.
+
+\subsection{Confusion matrix analysis}
+
+The confusion matrix reveals specific error patterns in the NLI model. The most frequent confusion occurs between the NEUTRAL and ENTAILMENT classes, where 97 of 120 neutral cases were erroneously classified as entailment. This tendency suggests that the model tends to interpret neutral relationships as supporting evidence when thematic overlap exists between claim and evidence.
+
+In contrast, the CONTRADICTION class shows excellent separability, with minimal confusion with respect to other categories (1 false positive and 4 false negatives), indicating that the model is particularly effective at identifying direct inconsistencies between claims and evidence.
+
+\subsection{Reference set coverage}
+
+Analysis of the dataset reveals that 726 of the 846 total entries (85.8\%) contain logical inference labels, with a balanced distribution across the three categories: 241 entailment cases, 241 contradiction cases, and 244 neutral cases. This balanced distribution in the complete set contrasts with the evaluated subset, where a slight predominance of entailment cases (160) over contradiction (120) and neutral (120) is observed.
+
+The results obtained establish a solid baseline for the ClimateFact system, identifying strengths in evidence retrieval and contradiction detection, as well as specific areas for improvement in the classification of neutral relationships.

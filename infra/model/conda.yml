@@ -1,0 +1,12 @@
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - torch>=2.2
+      - transformers>=4.40
+      - accelerate
+      - sentencepiece
+      - datasets
+

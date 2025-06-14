@@ -1,0 +1,31 @@
+\section{Discussion}
+
+The experimental results reveal specific characteristics of the ClimateFact system that require contextualized analysis regarding its practical application in climate contradiction detection.
+
+\subsection{Interpretation of retrieval metrics}
+
+The observed behavior in retrieval metrics reflects inherent trade-offs in fact-checking systems. The progressive decrease in precision as \textit{k} increases (from 0.655 for \textit{k=1} to 0.184 for \textit{k=10}) represents an expected dilution of relevance, where each increment in the number of retrieved documents introduces less pertinent results to the final set.
+
+However, from the perspective of contradiction detection, recall constitutes the most practically important metric. To invalidate a climate claim, it suffices to identify \textit{at least one} contradiction grounded in authoritative scientific evidence. Under this premise, the recall of 0.91 for \textit{k=5} is highly satisfactory, suggesting that the system successfully retrieves contradictory evidence in more than 90\% of evaluated cases.
+
+The configuration of \textit{k=5} represents an efficient balance between retrieval exhaustiveness and computational load for the subsequent NLI component. This parameterization minimizes the number of required logical inferences while maintaining practically optimal retrieval capabilities.
+
+\subsection{Hybrid ranking evaluation}
+
+The MRR stabilized at 0.76 for values of \textit{$k \geq 3$} demonstrates the effectiveness of the proposed hybrid pipeline. Considering that the strategy combines conceptual retrieval by regex, named entity extraction, and semantic search through OpenAI's \texttt{text-embedding-3-small} embeddings, this performance suggests a positive synergy between the complementary retrieval methods.
+
+The absence of explicit reranking beyond semantic similarity ordering limits the direct interpretability of the obtained nDCG metrics. Nevertheless, the consistent progression of nDCG@k (from 0.655 to 0.876) indicates that the system effectively positions relevant documents in higher ranking positions, validating the implemented hybrid architecture.
+
+\subsection{Specialized performance in contradiction detection}
+
+The exceptional performance of the NLI model on the CONTRADICTION class (F1-score of 0.975) is particularly relevant given the system's specific objective. This specialization aligns with the functional requirements of ClimateFact, where precise inconsistency detection constitutes the primary use case.
+
+The asymmetric error distribution, concentrated primarily in the NEUTRAL-ENTAILMENT confusion, suggests a model bias toward identifying supporting relationships in the presence of thematic overlap. This behavior, while problematic for general classification applications, does not significantly compromise the central functionality of the contradiction detection system.
+
+The superiority in contradiction detection could be attributed both to intrinsic characteristics of the DeBERTa-Large-MNLI model and to distributional patterns present in its training data. Future research could explore whether this specialization reflects an architectural bias of the model or an emergent characteristic of the corpora used during its training.
+
+\subsection{Implications for climate verification systems}
+
+The results demonstrate the technical feasibility of automated systems for climate misinformation detection. The combination of high relevant evidence retrieval and precise contradiction detection establishes solid foundations for specialized fact-checking tools in the climate domain.
+
+The identified limitations, particularly in the classification of neutral relationships, represent improvement opportunities that do not compromise the system's immediate practical utility. Future iterations could benefit from more sophisticated reranking strategies and specific adjustments to improve discrimination between neutral and entailment classes.

@@ -1,0 +1,5 @@
+data/passages.jsonl filter=lfs diff=lfs merge=lfs -text
+data/concept_index.json filter=lfs diff=lfs merge=lfs -text
+docs/IPCC_AR6_SYR_FullVolume.pdf filter=lfs diff=lfs merge=lfs -text
+docs/test_pages/*.pdf filter=lfs diff=lfs merge=lfs -text
+paper/*.pdf filter=lfs diff=lfs merge=lfs -text

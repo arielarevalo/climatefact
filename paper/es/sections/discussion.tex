@@ -1,0 +1,31 @@
+\section{Discusión}
+
+Los resultados experimentales revelan características específicas del sistema ClimateFact que requieren análisis contextualizado respecto a su aplicación práctica en la detección de contradicciones climáticas.
+
+\subsection{Interpretación de métricas de recuperación}
+
+El comportamiento observado en las métricas de recuperación refleja trade-offs inherentes en sistemas de verificación de hechos. La disminución progresiva de la precisión conforme aumenta \textit{k} (de 0.655 para \textit{k=1} a 0.184 para \textit{k=10}) representa una dilución esperada de la relevancia, donde cada incremento en el número de documentos recuperados introduce resultados menos pertinentes al conjunto final.
+
+Sin embargo, desde la perspectiva de la detección de contradicciones, el recall constituye la métrica de mayor importancia práctica. Para invalidar una afirmación climática, basta con identificar \textit{al menos una} contradicción fundamentada en evidencia científica autorizada. Bajo esta premisa, el recall de 0.91 para \textit{k=5} resulta altamente satisfactorio, sugiriendo que el sistema recupera exitosamente evidencia contradictoria en más del 90\% de los casos evaluados.
+
+La configuración de \textit{k=5} representa un equilibrio eficiente entre exhaustividad de recuperación y carga computacional para el componente NLI posterior. Esta parametrización minimiza el número de inferencias lógicas requeridas mientras mantiene capacidades de recuperación prácticamente óptimas.
+
+\subsection{Evaluación del ranking híbrido}
+
+El MRR estabilizado en 0.76 para valores de \textit{$k \geq 3$} evidencia la efectividad del pipeline híbrido propuesto. Considerando que la estrategia combina recuperación conceptual por regex, extracción de entidades nombradas, y búsqueda semántica mediante embeddings \texttt{text-embedding-3-small} de OpenAI, este rendimiento sugiere una sinergia positiva entre los métodos de recuperación complementarios.
+
+La ausencia de reranking explícito más allá del ordenamiento por similitud semántica limita la interpretabilidad directa de las métricas nDCG obtenidas. No obstante, la progresión consistente del nDCG@k (de 0.655 a 0.876) indica que el sistema posiciona efectivamente documentos relevantes en posiciones superiores del ranking, validando la arquitectura híbrida implementada.
+
+\subsection{Rendimiento especializado en detección de contradicciones}
+
+El desempeño excepcional del modelo NLI en la clase CONTRADICTION (F1-score de 0.975) resulta particularmente relevante dado el objetivo específico del sistema. Esta especialización coincide con los requerimientos funcionales de ClimateFact, donde la detección precisa de inconsistencias constituye el caso de uso primario.
+
+La distribución asimétrica de errores, concentrada principalmente en la confusión NEUTRAL-ENTAILMENT, sugiere un sesgo del modelo hacia la identificación de relaciones de apoyo en presencia de solapamiento temático. Este comportamiento, aunque problemático para aplicaciones de clasificación general, no compromete significativamente la funcionalidad central del sistema de detección de contradicciones.
+
+La supremacía en la detección de contradicciones podría atribuirse tanto a características intrínsecas del modelo DeBERTa-Large-MNLI como a patrones distribucionales presentes en sus datos de entrenamiento. Investigaciones futuras podrían explorar si esta especialización refleja un sesgo arquitectural del modelo o una característica emergente de los corpus utilizados durante su entrenamiento.
+
+\subsection{Implicaciones para sistemas de verificación climática}
+
+Los resultados demuestran la viabilidad técnica de sistemas automatizados para la detección de desinformación climática. La combinación de alta recuperación de evidencia relevante y detección precisa de contradicciones establece fundamentos sólidos para herramientas de verificación de hechos especializadas en el dominio climático.
+
+Las limitaciones identificadas, particularmente en la clasificación de relaciones neutrales, representan oportunidades de mejora que no comprometen la utilidad práctica inmediata del sistema. Futuras iteraciones podrían beneficiarse de estrategias de reranking más sofisticadas y ajustes específicos para mejorar la discriminación entre clases neutrales y de implicación.

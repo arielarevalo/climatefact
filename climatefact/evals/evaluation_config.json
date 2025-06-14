@@ -1,0 +1,35 @@
+{
+  "evaluation_config": {
+    "k_values": [1, 3, 5, 10],
+    "data_paths": {
+      "base_data_path": "../../data",
+      "gold_set_file": "gold_set.json",
+      "passages_file": "passages.jsonl",
+      "concept_index_file": "concept_index.json"
+    },
+    "output_paths": {
+      "reports_dir": "./reports",
+      "logs_dir": "./logs"
+    },
+    "retrieval_methods": {
+      "regex_retrieval": {
+        "enabled": true,
+        "max_results_per_query": 10
+      },
+      "dense_retrieval": {
+        "enabled": false,
+        "max_results_per_query": 10
+      },
+      "hybrid_retrieval": {
+        "enabled": false,
+        "max_results_per_query": 10
+      }
+    },
+    "evaluation_settings": {
+      "log_level": "INFO",
+      "save_individual_query_results": true,
+      "generate_detailed_reports": true,
+      "include_recommendations": true
+    }
+  }
+}

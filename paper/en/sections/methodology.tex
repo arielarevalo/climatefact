@@ -1,0 +1,60 @@
+\section{Methodology}
+
+This work implements an automatic verification system for climate change claims, combining advanced natural language processing (NLP) techniques with a retrieval-augmented generation (RAG) approach. The complete pipeline is organized as a workflow composed of two stages: the construction of an embedding-based knowledge base from a scientific reference corpus, and assisted semantic inference to verify external claims through textual reasoning.
+
+\subsection{Embedding-Based Knowledge-Assisted Semantic Verification Pipeline}
+
+
+\subsubsection{Corpus extraction and preprocessing}
+The Synthesis Report of the Sixth Assessment Report of the IPCC~\cite{ipcc2023}, in PDF format, was used as the knowledge source. To preserve the original semantic structure, the \texttt{MinerU} parser was applied, which transforms documents into Markdown with structural tags. In this way, images and footers were discarded to obtain a cleaner corpus.
+
+
+\subsubsection{Coreference resolution and text segmentation}
+Once the content was extracted, it was segmented at the paragraph level and processed with the \textbf{AllenNLP Coreference Model}, based on \textbf{SpanBERT-large}, to replace pronouns with their explicit antecedents. This step improves the referential coherence of the text and facilitates the comparison of all sentences with their explicit subjects. Then, sentence-level segmentation was applied, and regular expressions were used to correct separation errors introduced during the coreference resolution stage.
+
+\subsubsection{Semantic vectorization of the corpus}
+Each sentence was transformed into a 1,536-dimensional embedding using OpenAI's \textbf{text-embedding-3-small} model. These embeddings constitute a semantic knowledge base that encapsulates precise, contextualized scientific information from the IPCC, organized for efficient searches by semantic proximity.
+
+\subsubsection{Hybrid concept index construction (regex + NER)}
+In addition to purely semantic search, a concept index was built combining lexical rules and entity recognition. This is executed in three stages: (a) extraction by regular expressions defined on climate ontologies, (b) entity detection with \textit{spaCy} and NLTK, and (c) fusion and deduplication of results with priority given to confidence and text coverage.
+
+\subsubsection{Hybrid retrieval and deduplication}
+At query time, the external claim is analyzed with the same hybrid extractor; the resulting concepts are used as a filter on the index to obtain a relevant subset of sentences. Subsequently, semantic search by embedding similarity is performed within that subset. This combination produces more complete and relevant results.
+
+\subsubsection{Contextual retrieval by embedding similarity}
+The input claim is converted into an embedding using the same OpenAI model. Then, the cosine similarity between that embedding and all embeddings in the knowledge base is calculated. The most similar sentence is selected as contextual evidence for logical analysis.
+
+The sets retrieved through hybrid search and independent semantic search are merged and subjected to a deduplication process to avoid redundant evidence.
+
+\subsubsection{Logical inference via NLI}
+Finally, the logical relationship between the reformulated claim and the retrieved evidence is evaluated using the \textbf{DeBERTa-Large-MNLI} model, specialized in natural language inference (NLI) tasks. The model classifies the relationship into one of the following categories:
+
+\begin{itemize}
+\item \textbf{Entailment}: The evidence implies the claim.
+\item \textbf{Contradiction}: The claim conflicts with the evidence.
+\item \textbf{Neutral}: The evidence neither confirms nor refutes the claim.
+\end{itemize}
+
+This approach allows verifying claims with explicit support from the IPCC scientific corpus, combining the robustness of semantic embeddings with the textual logical reasoning of state-of-the-art NLI models.
+
+\subsection{Runtime application architecture}
+Corpus preprocessing and hybrid index construction are executed \emph{outside} the inference graph, through standalone command-line scripts. In contrast, the verification application exposed to the end user is an interface that orchestrates a graph. This graph includes four subtasks: (i) claim segmentation, (ii) hybrid retrieval, (iii) contradiction detection via NLI, and (iv) generation of the explanatory response shown to the user.
+
+The separation between resource construction and the inference graph facilitates incremental knowledge updates without interrupting the service, and allows deploying the application in lightweight environments where only online verification needs to be executed.
+
+\subsection{Resource acquisition and management}
+
+All resources are openly accessible:
+
+\begin{itemize}
+\item \textbf{Models}:
+      \begin{itemize}
+      \item \texttt{text-embedding-3-small} and \texttt{gpt-4o-mini}: OpenAI API with educational credits.
+      \item \texttt{DeBERTa-Large-MNLI}: Docker image published in \textit{Microsoft}'s public container registry.
+      \end{itemize}
+\item \textbf{Data}: IPCC reports downloaded from the official repository (\url{https://www.ipcc.ch}).
+\item \textbf{Tools}: \texttt{spaCy}, \texttt{NLTK}, \texttt{AllenNLP}, \texttt{LangGraph}, and \texttt{Streamlit}, all with permissive licenses.
+\item \textbf{Compute}: one \texttt{Standard\_NC4as\_T4\_v3} node (\$0.53 USD/h) on AzureML for NLI inference.
+\end{itemize}
+
+These resources are obtained without prohibitive cost and meet open-access ethical requirements, facilitating the reproducibility of the study.

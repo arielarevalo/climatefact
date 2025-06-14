@@ -1,0 +1,60 @@
+\section{Metodología}
+
+Este trabajo implementa un sistema automático de verificación de afirmaciones sobre cambio climático, combinando técnicas avanzadas de procesamiento de lenguaje natural (PLN) con un enfoque de recuperación de información aumentada por generación (RAG). El pipeline completo se organiza como un flujo compuesto por dos etapas: la construcción de una base de conocimiento de embeddings a partir de un corpus científico de referencia y la inferencia semántica asistida para verificar afirmaciones externas mediante razonamiento textual.
+
+\subsection{Pipeline de Verificación Semántica Asistida por Conocimiento Basado en Embeddings}
+
+
+\subsubsection{Extracción y preprocesamiento del corpus}
+Como fuente de conocimiento se utilizó el informe de síntesis del Sexto Informe de Evaluación del IPCC~\cite{ipcc2023}, en formato PDF. Para preservar la estructura semántica original, se aplicó el parser \texttt{MinerU}, que permite transformar documentos a Markdown con etiquetas estructurales. De esta forma se descartaron las imágenes y los pies de página para lograr obtener un corpus más limpio.
+
+
+\subsubsection{Resolución de correferencias y segmentación textual}
+Una vez extraído el contenido, se segmentó a nivel de párrafo y se procesó con el modelo \textbf{AllenNLP Coreference Model}, basado en \textbf{SpanBERT-large}, para reemplazar pronombres por sus antecedentes explícitos. Este paso mejora la coherencia referencial del texto y facilita la comparación de todas las oraciones con sus sujetos explícitos. Luego, se aplicó segmentación a nivel de oración y se utilizaron expresiones regulares para corregir errores de separación introducidos durante la etapa de resolución de coreferencias.
+
+\subsubsection{Vectorización semántica del corpus}
+Cada oración fue transformada en un embedding de 1,536 dimensiones mediante el modelo \textbf{text-embedding-3-small} de OpenAI. Estos embeddings constituyen una base de conocimiento semántico que encapsula información científica precisa y contextualizada del IPCC, organizada para búsquedas eficientes por proximidad semántica.
+
+\subsubsection{Construcción del índice híbrido de conceptos (regex + NER)}
+Además de la búsqueda puramente semántica, se construyó un índice de conceptos que combina reglas léxicas y reconocimiento de entidades. Esto se ejecuta en tres etapas: (a) extracción por expresiones regulares definidas sobre ontologías climáticas, (b) detección de entidades con \textit{spaCy} y NLTK, y (c) fusión y deduplicación de los resultados con prioridad a la confianza y a la cobertura del texto.
+
+\subsubsection{Recuperación híbrida y deduplicación}
+En tiempo de consulta, la afirmación externa se analiza con el mismo extractor híbrido; los conceptos resultantes se utilizan como filtro sobre el índice para obtener un subconjunto pertinente de oraciones. Seguidamente se realiza la búsqueda semántica por similitud de embeddings dentro de ese subconjunto. Esta combinación produce resultados más completos y relevantes.
+
+\subsubsection{Recuperación contextual por similitud de embeddings}
+La afirmación de entrada es convertida en un embedding usando el mismo modelo de OpenAI. Luego se calcula la similitud coseno entre dicho embedding y todos los embeddings de la base de conocimiento. Se selecciona la oración más similar como evidencia contextual para el análisis lógico.
+
+Los conjuntos recuperados mediante búsqueda híbrida y búsqueda semántica independiente se fusionan y se someten a un proceso de desduplicación para evitar evidencia redundante.
+
+\subsubsection{Inferencia lógica mediante NLI}
+Finalmente, se evalúa la relación lógica entre la afirmación reformulada y la evidencia recuperada utilizando el modelo \textbf{DeBERTa‑Large‑MNLI}, especializado en tareas de inferencia textual natural (NLI). El modelo clasifica la relación en una de las siguientes categorías:
+
+\begin{itemize}
+\item \textbf{Entailment}: La evidencia implica la afirmación.
+\item \textbf{Contradiction}: La afirmación entra en conflicto con la evidencia.
+\item \textbf{Neutral}: La evidencia no permite confirmar ni refutar la afirmación.
+\end{itemize}
+
+Este enfoque permite verificar afirmaciones con soporte explícito en el corpus científico del IPCC, combinando la robustez de los embeddings semánticos con el razonamiento lógico textual de modelos NLI de última generación.
+
+\subsection{Arquitectura de la aplicación en ejecución}
+El preprocesamiento del corpus y la construcción del índice híbrido se ejecutan \emph{fuera} del grafo de inferencia, mediante scripts autónomos en "línea de comandos". En contraste, la aplicación de verificación expuesta al usuario final es una interfaz que orquesta un grafo. Dicho grafo incluye cuatro sub‑tareas: (i) segmentación de la afirmación, (ii) recuperación híbrida, (iii) detección de contradicciones vía NLI, y (iv) generación de la respuesta explicativa que se muestra al usuario.
+
+La separación entre construcción de recursos y grafo de inferencia facilita la actualización incremental del conocimiento sin interrumpir el servicio, y permite desplegar la aplicación en entornos ligeros donde solo se requiere ejecutar la verificación en línea.
+
+\subsection{Obtención y gestión de recursos}
+
+Todos los insumos son de acceso abierto:
+
+\begin{itemize}
+\item \textbf{Modelos}:
+      \begin{itemize}
+      \item \texttt{text-embedding-3-small} y \texttt{gpt-4o-mini}: API de OpenAI con créditos educativos.
+      \item \texttt{DeBERTa-Large-MNLI}: imagen Docker publicada en el registro público de contenedores de \textit{Microsoft}.
+      \end{itemize}
+\item \textbf{Datos}: Informes IPCC descargados del repositorio oficial (\url{https://www.ipcc.ch}).
+\item \textbf{Herramientas}: \texttt{spaCy}, \texttt{NLTK}, \texttt{AllenNLP}, \texttt{LangGraph} y \texttt{Streamlit}, todas con licencias permisivas.
+\item \textbf{Cómputo}: un nodo \texttt{Standard\_NC4as\_T4\_v3} (\$0.53 USD/h) en AzureML para inferencia NLI.
+\end{itemize}
+
+Estos recursos se obtienen sin costo prohibitivo y cumplen los requisitos éticos de acceso abierto, facilitando la replicabilidad del estudio.

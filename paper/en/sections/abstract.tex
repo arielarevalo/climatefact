@@ -1,0 +1,11 @@
+\begin{abstract}
+This project presents a fact-checking workflow called ClimateFact that aims to evaluate climate change-related statements using trustworthy scientific knowledge bases. Motivated by the prevalence of climate misinformation and the lack of accessible, domain-specific verification tools, ClimateFact uses Retrieval-Augmented Generation (RAG) to identify and explain inconsistencies between claims and authoritative sources such as the IPCC reports.
+
+The workflow generates a knowledge base using embeddings and regex-based indexing informed by domain-specific ontologies. It then retrieves relevant passages using a multi-step retrieval and re-ranking pipeline, followed by a natural language inference (NLI) model to assess the factual alignment of claims.
+
+Finally, an LLM generates grounded explanations marking contradictions with references. The methodology includes reproducible evaluation pipelines to measure retrieval accuracy, factual consistency, and explanation quality.
+\end{abstract}
+
+\begin{IEEEkeywords}
+fact-checking, climate change, RAG, NLI, retrieval-augmented generation
+\end{IEEEkeywords}

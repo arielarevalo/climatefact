@@ -1,0 +1,6 @@
+# There are multiple opportunities for scaling up climate action
+
+a) Feasibility of climate responses and adaptation, and potential of mitigation options in the near term
+
+![](images/8cfb34375c8ac862205edc6d38a112a557fed46dfe825f0d29d04923ce63dc26.jpg)  
+Figure SPM.7: Multiple Opportunities for scaling up climate action. Panel (a) presents selected mitigation and adaptation options across different systems. The left-hand side of panel a shows climate responses and adaptation options assessed for their multidimensional feasibility at global scale, in the near term and up to $1 . 5 ^ { \circ } \mathrm { C }$ global warming. As literature above $1 . 5 ^ { \circ } \mathrm { C }$ is limited, feasibility at higher levels of warming may change, which is currently not possible to assess robustly. The term response is used here in addition to adaptation because some responses, such as migration, relocation and resettlement may or may not be considered to be adaptation. Forest based adaptation includes sustainable forest management, forest conservation and restoration, reforestation

@@ -1,0 +1,9 @@
+\section{Conclusion}
+
+This work presented ClimateFact, a RAG-based workflow for automated fact-checking of climate change claims against authoritative scientific sources. The system integrates hybrid retrieval, natural language inference, and grounded explanation generation into a reproducible pipeline.
+
+The experimental evaluation demonstrated strong retrieval performance, with a recall of 0.91 at $k=5$, indicating that relevant evidence is successfully recovered in over 90\% of evaluated cases. The NLI component achieved an F1-score of 0.975 for the CONTRADICTION class, confirming the system's effectiveness at its primary task of detecting factual inconsistencies.
+
+However, the system exhibits a notable weakness in NEUTRAL classification, where 97 of 120 neutral cases were misclassified as ENTAILMENT. This limitation, while not critical for contradiction detection, reduces the system's reliability as a general-purpose factual alignment classifier.
+
+Future work should address the NEUTRAL--ENTAILMENT confusion through fine-tuning on domain-specific NLI data, explore more sophisticated reranking strategies to improve retrieval precision, and investigate the integration of multilingual claim verification to broaden the system's applicability beyond English-language sources.
