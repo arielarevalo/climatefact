@@ -1,0 +1,2 @@
+![](images/a762e85d57bb916090987542c5eaed7f1b502c9e32fe1d1a623267fc0d5e927a.jpg)  
+Table 2.1: Assessment of observed changes in large-scale indicators of mean climate across climate system components, and their attribution to human influence. The colour coding indicates the assessed confidence in / likelihood76 of the observed change and the human contribution as a driver or main driver (specified in that case) where available (see colour key). Otherwise, explanatory text is provided. {WGI Table TS.1}

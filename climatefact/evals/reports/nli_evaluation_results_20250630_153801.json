@@ -1,0 +1,67 @@
+{
+  "accuracy": 0.615,
+  "total_predictions": 400,
+  "per_class_metrics": {
+    "ENTAILMENT": {
+      "precision": 0.5242718446601942,
+      "recall": 0.675,
+      "f1_score": 0.5901639344262296
+    },
+    "CONTRADICTION": {
+      "precision": 0.9913793103448276,
+      "recall": 0.9583333333333334,
+      "f1_score": 0.9745762711864409
+    },
+    "NEUTRAL": {
+      "precision": 0.2948717948717949,
+      "recall": 0.19166666666666668,
+      "f1_score": 0.23232323232323232
+    }
+  },
+  "macro_averages": {
+    "macro_precision": 0.6035076499589389,
+    "macro_recall": 0.6083333333333334,
+    "macro_f1": 0.5990211459786342
+  },
+  "confusion_matrix": {
+    "ENTAILMENT": {
+      "ENTAILMENT": 108,
+      "CONTRADICTION": 1,
+      "NEUTRAL": 51
+    },
+    "CONTRADICTION": {
+      "ENTAILMENT": 1,
+      "CONTRADICTION": 115,
+      "NEUTRAL": 4
+    },
+    "NEUTRAL": {
+      "ENTAILMENT": 97,
+      "CONTRADICTION": 0,
+      "NEUTRAL": 23
+    }
+  },
+  "label_distribution": {
+    "predicted": {
+      "ENTAILMENT": 206,
+      "NEUTRAL": 78,
+      "CONTRADICTION": 116
+    },
+    "true": {
+      "ENTAILMENT": 160,
+      "CONTRADICTION": 120,
+      "NEUTRAL": 120
+    }
+  },
+  "gold_set_analysis": {
+    "total_entries": 846,
+    "entries_with_entailment": 726,
+    "entries_without_entailment": 120,
+    "entailment_distribution": {
+      "ENTAILMENT": 241,
+      "CONTRADICTION": 241,
+      "NEUTRAL": 244
+    },
+    "percentage_with_entailment": 85.81560283687944
+  },
+  "evaluation_timestamp": "2025-06-30T15:38:01.189062"
+}

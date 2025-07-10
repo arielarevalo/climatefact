@@ -1,0 +1,17 @@
+Box SPM.1, Table 1: Description and relationship of scenarios and modelled pathways considered across AR6 Working Group reports. {Cross-Section Box.2 Figure 1}   
+
+<html><body><table><tr><td>Category</td><td>Category description</td><td></td><td>RCPy** in WGI &amp; WGII</td></tr><tr><td>C1</td><td>litmint</td><td>Very low (SSP1-1.9)</td><td></td></tr><tr><td>C2</td><td>ret0)</td><td></td><td></td></tr><tr><td>C3</td><td>limit warming to 2°C (&gt;67%)</td><td>Low (SSP1-2.6)</td><td>RCP2.6</td></tr><tr><td>C4</td><td>limit warming to 2°C (&gt;50%)</td><td></td><td></td></tr><tr><td>C5</td><td>limit warming to2.5°C (&gt;50%)</td><td></td><td></td></tr><tr><td>C6</td><td>limit warming to 3°C (&gt;50%)</td><td>Intermediate (SSP2-4.5)</td><td>RCP 4.5</td></tr><tr><td>C7</td><td>limit warming to 4°C (&gt;50%)</td><td>High (SSP3-7.0)</td><td></td></tr><tr><td>C8</td><td> exceed warming of 4°C (&gt;50%)</td><td>Very high (SSP5-8.5)</td><td>RCP 8.5</td></tr></table></body></html>
+
+\* See footnote 21 for the SSPx-y terminology.
+
+\*\* See footnote 23 for the RCPy terminology.
+
+\*\*\* Limited overshoot refers to exceeding $1 . 5 ^ { \circ } \mathsf { C }$ global warming by up to about $0 . 1 ^ { \circ } \mathsf C ,$ high overshoot by $0 . 1 ^ { \circ } \mathsf { C } { \cdot } 0 . 3 ^ { \circ } \mathsf { C } ,$ in both cases for up to several decades.
+
+# Current Mitigation Progress, Gaps and Challenges
+
+A.4 Policies and laws addressing mitigation have consistently expanded since AR5. Global GHG emissions in 2030 implied by nationally determined contributions (NDCs) announced by October 2021 make it likely that warming will exceed $1 . 5 \textdegree$ during the 21st century and make it harder to limit warming below ${ \displaystyle 2 ^ { \circ } \mathbb { C } . }$ . There are gaps between projected emissions from implemented policies and those from NDCs and finance flows fall short of the levels needed to meet climate goals across all sectors and regions. (high confidence) {2.2, 2.3, Figure 2.5, Table 2.2}
+
+A.4.1 The UNFCCC, Kyoto Protocol, and the Paris Agreement are supporting rising levels of national ambition. The Paris Agreement, adopted under the UNFCCC, with near universal participation, has led to policy development and target-setting at national and sub-national levels, in particular in relation to mitigation, as well as enhanced transparency of climate action and support (medium confidence). Many regulatory and economic instruments have already been deployed successfully (high confidence). In many countries, policies have enhanced energy efficiency, reduced rates of deforestation and accelerated technology deployment, leading to avoided and in some cases reduced or removed emissions (high confidence). Multiple lines of evidence suggest that mitigation policies have led to several24 Gt ${ \mathsf { C O } } _ { 2 }$ -eq yr-1 of avoided global emissions (medium confidence). At least 18 countries have sustained absolute production-based GHG and consumption-based ${ \mathsf { C O } } _ { 2 }$ reductions25 for longer than 10 years. These reductions have only partly offset global emissions growth (high confidence). {2.2.1, 2.2.2}
+
+A.4.2 Several mitigation options, notably solar energy, wind energy, electrification of urban systems, urban green infrastructure, energy efficiency, demand-side management, improved forest and crop / grassland management, and reduced food waste and loss, are technically viable, are becoming increasingly cost effective and are generally supported by the

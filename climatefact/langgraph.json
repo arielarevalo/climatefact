@@ -1,0 +1,13 @@
+{
+  "graphs": {
+    "contradiction_detection": {
+      "path": "climatefact.workflows.contradiction_detection:graph",
+      "config_schema": "climatefact.workflows.contradiction_detection.types:ContradictionDetectionConfig"
+    }
+  },
+  "env": ".env",
+  "python_version": "3.12",
+  "dependencies": [
+    "."
+  ]
+}

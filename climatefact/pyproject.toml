@@ -1,0 +1,40 @@
+[project]
+name = "climatefact"
+version = "0.1.0"
+description = "A Streamlit application for detecting contradictions in climate-related statements"
+readme = "README.md"
+requires-python = ">=3.12, <3.14"
+dependencies = [
+    "langgraph==0.4.8",
+    "langgraph-prebuilt==0.2.2",
+    "langgraph-sdk==0.1.70",
+    "langgraph-checkpoint-sqlite==2.0.10",
+    "langsmith==0.3.45",
+    "langchain-community==0.3.25",
+    "langchain-core==0.3.66",
+    "langchain-openai==0.3.27",
+    "python-dotenv==1.0.1",
+    "notebook==7.4.3",
+    "trustcall==0.0.39",
+    "langgraph-cli[inmem]",
+    "spacy==3.8.7",
+    "nltk==3.9.1",
+    "streamlit==1.45.1"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=23.0",
+    "isort>=5.0",
+]
+
+[project.scripts]
+climatefact = "climatefact.cli:main"
+
+[tool.poetry]
+packages = [{include = "climatefact", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
