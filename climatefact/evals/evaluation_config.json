@@ -2,14 +2,14 @@
   "evaluation_config": {
     "k_values": [1, 3, 5, 10],
     "data_paths": {
-      "base_data_path": "/Users/ariel/workspace/ci0129/proyecto/data",
+      "base_data_path": "../../data",
       "gold_set_file": "gold_set.json",
       "passages_file": "passages.jsonl",
       "concept_index_file": "concept_index.json"
     },
     "output_paths": {
-      "reports_dir": "/Users/ariel/workspace/ci0129/proyecto/climatefact/evals/reports",
-      "logs_dir": "/Users/ariel/workspace/ci0129/proyecto/climatefact/evals/logs"
+      "reports_dir": "./reports",
+      "logs_dir": "./logs"
     },
     "retrieval_methods": {
       "regex_retrieval": {

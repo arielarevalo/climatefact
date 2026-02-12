@@ -7,13 +7,13 @@ the concept extraction system.
 """
 
 import re
-from typing import Dict, Pattern
+from re import Pattern
 
 # ===================================================================
 # REGEX PATTERNS FOR CONCEPT EXTRACTION
 # ===================================================================
 
-REGEX_MAP: Dict[str, Pattern[str]] = {
+REGEX_MAP: dict[str, Pattern[str]] = {
     # ───────────────────────────────────────────
     # 1. Gases and emissions
     # ───────────────────────────────────────────
@@ -22,70 +22,43 @@ REGEX_MAP: Dict[str, Pattern[str]] = {
     "n2o": re.compile(r"\b(?:N2O|nitrous\s+oxide)\b", re.I),
     "ghg": re.compile(r"\b(?:GHGs?|greenhouse\s+gases?)\b", re.I),
     "f_gases": re.compile(r"\b(?:F-?gases|fluorinated\s+gases)\b", re.I),
-    "co2_lulucf": re.compile(
-        r"\b(?:CO\s*[₂2]\s*-\s*LULUCF|carbon\s+dioxide\s+from\s+LULUCF)\b", re.I
-    ),
+    "co2_lulucf": re.compile(r"\b(?:CO\s*[₂2]\s*-\s*LULUCF|carbon\s+dioxide\s+from\s+LULUCF)\b", re.I),
     "tco2_ffi": re.compile(
         r"\b(?:tCO[₂2]-FFI|tonnes\s+of\s+CO[₂2]\s+from\s+fossil\s+fuels\s+and\s+industry)\b",
         re.I,
     ),
     "pfcs": re.compile(r"\b(?:PFCs?|perfluorocarbons?)\b", re.I),
-    "daccs": re.compile(
-        r"\b(?:DACCS\+?|direct\s+air\s+carbon\s+capture\s+and\s+storage)\b", re.I
-    ),
+    "daccs": re.compile(r"\b(?:DACCS\+?|direct\s+air\s+carbon\s+capture\s+and\s+storage)\b", re.I),
     "co2_eq": re.compile(r"\b(?:CO[₂2]-eq|carbon\s+dioxide\s+equivalen[ct]s?)\b", re.I),
     "hfcs": re.compile(r"\b(?:HFCs?|hydrofluorocarbons?)\b", re.I),
-    "sf6": re.compile(
-        r"\b(?:SF[₆6]|sulphur\s+hexafluoride|sulfur\s+hexafluoride)\b", re.I
-    ),
+    "sf6": re.compile(r"\b(?:SF[₆6]|sulphur\s+hexafluoride|sulfur\s+hexafluoride)\b", re.I),
     "o3": re.compile(r"\b(?:O[₃3]|ozone)\b", re.I),
     "emissions": re.compile(r"\bemissions?\b", re.I),
     "fossil fuels": re.compile(r"\bfossil\s+fuels?\b", re.I),
     "black carbon": re.compile(r"\bblack\s+carbon\b", re.I),
     "soot": re.compile(r"\bsoot\b", re.I),
     "non-co2 emissions": re.compile(r"\bnon[-\s]?co2\s+emissions?\b", re.I),
-    "short-lived climate forcers": re.compile(
-        r"\b(?:short[-\s]?lived\s+climate\s+forcers?|SLCFs?)\b", re.I
-    ),
+    "short-lived climate forcers": re.compile(r"\b(?:short[-\s]?lived\s+climate\s+forcers?|SLCFs?)\b", re.I),
     "aerosols": re.compile(r"\baerosols?\b", re.I),
-    "carbon dioxide removal": re.compile(
-        r"\b(?:carbon\s+dioxide\s+removal|CDR)\b", re.I
-    ),
-    "beccs": re.compile(
-        r"\b(?:BECCS|bioenergy\s+with\s+carbon\s+capture\s+and\s+storage)\b", re.I
-    ),
+    "carbon dioxide removal": re.compile(r"\b(?:carbon\s+dioxide\s+removal|CDR)\b", re.I),
+    "beccs": re.compile(r"\b(?:BECCS|bioenergy\s+with\s+carbon\s+capture\s+and\s+storage)\b", re.I),
     "ccs": re.compile(r"\b(?:CCS|carbon\s+capture\s+and\s+storage)\b", re.I),
     "ccu": re.compile(r"\b(?:CCU|carbon\s+capture\s+and\s+utili[sz]ation)\b", re.I),
     "cdr": re.compile(r"\b(?:CDR|carbon\s+dioxide\s+removal)\b", re.I),
-    "co2_ffi": re.compile(
-        r"\b(?:CO[₂2][-–]FFI|CO[₂2]\s+from\s+fossil\s+fuels\s+and\s+industry)\b", re.I
-    ),
+    "co2_ffi": re.compile(r"\b(?:CO[₂2][-–]FFI|CO[₂2]\s+from\s+fossil\s+fuels\s+and\s+industry)\b", re.I),
     "ffi": re.compile(r"\b(?:FFI|fossil\s+fuels?\s+and\s+industry)\b", re.I),
-    "lulucf": re.compile(
-        r"\b(?:LULUCF|land[-\s]use,\s+land[-\s]use\s+change\s+and\s+forestry)\b", re.I
-    ),
+    "lulucf": re.compile(r"\b(?:LULUCF|land[-\s]use,\s+land[-\s]use\s+change\s+and\s+forestry)\b", re.I),
     "nf3": re.compile(r"\b(?:NF3|nitrogen\s+trifluoride)\b", re.I),
     "rcb": re.compile(r"\bRCB\b", re.I),
-    "rcp": re.compile(
-        r"\b(?:RCPs?|representative\s+concentration\s+pathways?)\b", re.I
-    ),
+    "rcp": re.compile(r"\b(?:RCPs?|representative\s+concentration\s+pathways?)\b", re.I),
     "slcf": re.compile(r"\b(?:SLCFs?|short[-\s]?lived\s+climate\s+forcers?)\b", re.I),
-    "tco2_eq": re.compile(
-        r"\b(?:tCO[₂2]-eq|tonnes\s+of\s+CO[₂2]\s+equivalen[ct]s?)\b", re.I
-    ),
-
+    "tco2_eq": re.compile(r"\b(?:tCO[₂2]-eq|tonnes\s+of\s+CO[₂2]\s+equivalen[ct]s?)\b", re.I),
     # ───────────────────────────────────────────
     # 2. Societal & economic terms
     # ───────────────────────────────────────────
-    "ssp": re.compile(
-        r"\b(?:SSP\d(?:-\d(?:\.\d)?)?|shared\s+socio[-\s]?economic\s+pathways?)\b", re.I
-    ),
-    "afolu": re.compile(
-        r"\b(?:AFOLU|agriculture,\s*forestry?\s*and\s*other\s*land\s*use)\b", re.I
-    ),
-    "crd": re.compile(
-        r"\bCRD\b", re.I
-    ),
+    "ssp": re.compile(r"\b(?:SSP\d(?:-\d(?:\.\d)?)?|shared\s+socio[-\s]?economic\s+pathways?)\b", re.I),
+    "afolu": re.compile(r"\b(?:AFOLU|agriculture,\s*forestry?\s*and\s*other\s*land\s*use)\b", re.I),
+    "crd": re.compile(r"\bCRD\b", re.I),
     "baseline": re.compile(r"\bbaseline\s+scenarios?\b", re.I),
     "mitigation": re.compile(r"\bmitigation\s+pathways?\b", re.I),
     "overshoot": re.compile(r"\bovershoot\s+scenarios?\b", re.I),
@@ -107,9 +80,7 @@ REGEX_MAP: Dict[str, Pattern[str]] = {
     ),
     "imp_ren": re.compile(r"\bIMP\s*[-–]?\s*REN\b", re.I),
     "ldc": re.compile(r"\b(?:LDCs?|least\s+developed\s+countries?)\b", re.I),
-    "lk": re.compile(
-        r"\bLK\b", re.I
-    ),
+    "lk": re.compile(r"\bLK\b", re.I),
     "ndc": re.compile(r"\b(?:NDCs?|nationally\s+determined\s+contributions?)\b", re.I),
     "r_and_d": re.compile(r"\b(?:R\s*&?\s*D|research\s+and\s+development)\b", re.I),
     "sdg": re.compile(r"\b(?:SDGs?|sustainable\s+development\s+goals?)\b", re.I),
@@ -120,7 +91,6 @@ REGEX_MAP: Dict[str, Pattern[str]] = {
         re.I,
     ),
     "usd": re.compile(r"\b(?:USD|US\s*dollars?)\b", re.I),
-
     # ───────────────────────────────────────────
     # 3. Climate-change concepts
     # ───────────────────────────────────────────
@@ -150,7 +120,6 @@ REGEX_MAP: Dict[str, Pattern[str]] = {
     "maladaptation": re.compile(r"\bmaladapt(?:ation|ive)\b", re.I),
     "residual_risk": re.compile(r"\bresidual\s+risk\b", re.I),
     "vulnerability": re.compile(r"\bvulnerab(?:le|ility)\b", re.I),
-
     # ───────────────────────────────────────────
     # 4. Temperatures & thresholds
     # ───────────────────────────────────────────
@@ -159,14 +128,11 @@ REGEX_MAP: Dict[str, Pattern[str]] = {
     "temp_xc": re.compile(r"\b\d(?:\.\d)?\s*°?C\b"),
     "temperature anomaly": re.compile(r"\btemperature\s+anomal(?:y|ies)\b", re.I),
     "ecs": re.compile(r"\b(?:ECS|equilibrium\s+climate\s+sensitivity)\b", re.I),
-
     # ───────────────────────────────────────────
     # 5. Observed / projected changes
     # ───────────────────────────────────────────
     "sea_level_rise": re.compile(r"\bsea\s+level\s+rise\b", re.I),
-    "global_temp": re.compile(
-        r"\b(?:global\s+surface\s+temperature|warming\s+level(?:s)?)\b", re.I
-    ),
+    "global_temp": re.compile(r"\b(?:global\s+surface\s+temperature|warming\s+level(?:s)?)\b", re.I),
     "ice_sheet": re.compile(r"\bice\s+sheet(?:s)?\b", re.I),
     "precipitation": re.compile(r"\bprecipitation\b", re.I),
     "weather": re.compile(r"\bweather\s+(?:patterns?|events?)\b", re.I),
@@ -178,7 +144,6 @@ REGEX_MAP: Dict[str, Pattern[str]] = {
     "heatwaves": re.compile(r"\bheat\s*waves?\b", re.I),
     "extreme": re.compile(r"\bextreme\s+(?:weather|events?|temperature)\b", re.I),
     "gt": re.compile(r"\b(?:GT|gigatonnes?)\b", re.I),
-
     # ───────────────────────────────────────────
     # 6. Impact & Units
     # ───────────────────────────────────────────
@@ -192,45 +157,30 @@ REGEX_MAP: Dict[str, Pattern[str]] = {
     "gigatonnes": re.compile(r"\bgigatonnes?\b", re.I),
     "ppm": re.compile(r"\bppm\b", re.I),
     "ppb": re.compile(r"\bppb\b", re.I),
-
     # ───────────────────────────────────────────
     # 7. Reports & Assessment
     # ───────────────────────────────────────────
-    "srocc": re.compile(
-        r"\b(?:SROCC|special\s+report\s+on\s+(?:the\s+)?ocean\s+and\s+cryosphere)\b", re.I
-    ),
-    "ar5": re.compile(
-        r"\b(?:AR5|fifth\s+assessment\s+report)\b", re.I
-    ),
+    "srocc": re.compile(r"\b(?:SROCC|special\s+report\s+on\s+(?:the\s+)?ocean\s+and\s+cryosphere)\b", re.I),
+    "ar5": re.compile(r"\b(?:AR5|fifth\s+assessment\s+report)\b", re.I),
     "ar6": re.compile(r"\b(?:AR6|sixth\s+assessment\s+report)\b", re.I),
     "sr1_5": re.compile(
         r"\b(?:SR1\.5|SR15|special\s+report\s+on\s+global\s+warming\s+of\s+1\.5\s*°?C)\b",
         re.I,
     ),
-    "srccl": re.compile(
-        r"\b(?:SRCCL|special\s+report\s+on\s+climate\s+change\s+and\s+land)\b", re.I
-    ),
+    "srccl": re.compile(r"\b(?:SRCCL|special\s+report\s+on\s+climate\s+change\s+and\s+land)\b", re.I),
     "syr": re.compile(r"\b(?:SYR|synthesis\s+report)\b", re.I),
     "csb": re.compile(r"\bCSB\b", re.I),
     "rfcs": re.compile(r"\b(?:RFCs?|reasons\s+for\s+concern)\b", re.I),
-
     # ───────────────────────────────────────────
     # 8. Models
     # ───────────────────────────────────────────
-    "cmip5": re.compile(
-        r"\b(?:CMIP5|coupled\s+model\s+intercomparison\s+project\s+phase\s*5)\b", re.I
-    ),
-    "cmip6": re.compile(
-        r"\b(?:CMIP6|coupled\s+model\s+intercomparison\s+project\s+phase\s*6)\b", re.I
-    ),
-    "fair": re.compile(
-        r"\b(?:FaIR|FAIR|(?i:finite[-\s]amplitude\s+impulse\s+response))\b"
-    ),
+    "cmip5": re.compile(r"\b(?:CMIP5|coupled\s+model\s+intercomparison\s+project\s+phase\s*5)\b", re.I),
+    "cmip6": re.compile(r"\b(?:CMIP6|coupled\s+model\s+intercomparison\s+project\s+phase\s*6)\b", re.I),
+    "fair": re.compile(r"\b(?:FaIR|FAIR|(?i:finite[-\s]amplitude\s+impulse\s+response))\b"),
     "magicc": re.compile(
         r"\b(?:MAGICC|model\s+for\s+the\s+assessment\s+of\s+greenhouse[-\s]gas\s+induced\s+climate\s+change)\b",
         re.I,
     ),
-
     # ───────────────────────────────────────────
     # 9. Technology
     # ───────────────────────────────────────────
@@ -238,24 +188,19 @@ REGEX_MAP: Dict[str, Pattern[str]] = {
     "ews": re.compile(r"\b(?:EWS|early\s+warning\s+systems?)\b", re.I),
     "li_on": re.compile(r"\b(?:Li[-\s]?ion|lithium[-\s]?ion)\b", re.I),
     "pv": re.compile(r"\b(?:PV|photovoltaic(?:s)?)\b", re.I),
-    
     # ───────────────────────────────────────────
     # 10. Agencies & organisations
     # ───────────────────────────────────────────
     "iea": re.compile(r"\b(?:IEA|international\s+energy\s+agency)\b", re.I),
-    "ipcc": re.compile(
-        r"\b(?:IPCC|intergovernmental\s+panel\s+on\s+climate\s+change)\b", re.I
-    ),
-    "who": re.compile(
-        r"\b(?:WHO|(?i:world\s+health\s+(?:organisation|organization)))\b"
-    ),
+    "ipcc": re.compile(r"\b(?:IPCC|intergovernmental\s+panel\s+on\s+climate\s+change)\b", re.I),
+    "who": re.compile(r"\b(?:WHO|(?i:world\s+health\s+(?:organisation|organization)))\b"),
 }
 
 # ===================================================================
 # PATTERN SCHEMA - MAPS REGEX KEYS TO CONCEPT CATEGORIES
 # ===================================================================
 
-PATTERN_SCHEMA: Dict[str, str] = {
+PATTERN_SCHEMA: dict[str, str] = {
     # EMISSION
     "co2": "EMISSION",
     "ch4": "EMISSION",
@@ -293,7 +238,6 @@ PATTERN_SCHEMA: Dict[str, str] = {
     "rcp": "EMISSION",
     "slcf": "EMISSION",
     "tco2_eq": "EMISSION",
-
     # SCENARIO
     "ssp": "SCENARIO",
     "rcp": "SCENARIO",
@@ -308,7 +252,6 @@ PATTERN_SCHEMA: Dict[str, str] = {
     "r_and_d": "SCENARIO",
     "sdg": "SCENARIO",
     "sids": "SCENARIO",
-
     # CLIMATE_VAR
     "global_temp": "CLIMATE_VAR",
     "sea_level_rise": "CLIMATE_VAR",
@@ -332,7 +275,6 @@ PATTERN_SCHEMA: Dict[str, str] = {
     "ip_modact": "CLIMATE_VAR",
     "heatwaves": "CLIMATE_VAR",
     "extreme": "CLIMATE_VAR",
-    
     # POLICY
     "net_zero": "POLICY",
     "carbon_budget": "POLICY",
@@ -364,7 +306,6 @@ PATTERN_SCHEMA: Dict[str, str] = {
     "maladaptation": "POLICY",
     "residual_risk": "POLICY",
     "vulnerability": "POLICY",
-
     # IMPACT
     "usd": "IMPACT",
     "gw": "IMPACT",
@@ -375,7 +316,6 @@ PATTERN_SCHEMA: Dict[str, str] = {
     "mwh": "IMPACT",
     "ppp": "IMPACT",
     "gt": "IMPACT",
-
     # REPORTS
     "srocc": "REPORTS",
     "ar5": "REPORTS",
@@ -385,24 +325,20 @@ PATTERN_SCHEMA: Dict[str, str] = {
     "sr1_5": "REPORTS",
     "srccl": "REPORTS",
     "syr": "REPORTS",
-
     # MODELS
     "cmip5": "MODELS",
     "cmip6": "MODELS",
     "fair": "MODELS",
     "magicc": "MODELS",
-
     # TECHNOLOGY
     "ev": "TECHNOLOGY",
     "ews": "TECHNOLOGY",
     "li_on": "TECHNOLOGY",
     "pv": "TECHNOLOGY",
-
     # AGENCIES
     "iea": "AGENCIES",
     "ipcc": "AGENCIES",
     "who": "AGENCIES",
-
     # TEMPORAL
     "temperature anomaly": "TEMPORAL",
 }
@@ -411,41 +347,41 @@ PATTERN_SCHEMA: Dict[str, str] = {
 # DOMAIN-SPECIFIC PATTERNS FOR ADVANCED CONCEPT EXTRACTION
 # ===================================================================
 
-DOMAIN_SPECIFIC_PATTERNS: Dict[str, list] = {
-    'CLIMATE_PHENOMENON': [
-        r'\b(?:el\s+ni[ñn]o|la\s+ni[ñn]a)\b',
-        r'\b(?:arctic\s+oscillation|ao)\b',
-        r'\b(?:north\s+atlantic\s+oscillation|nao)\b',
-        r'\b(?:pacific\s+decadal\s+oscillation|pdo)\b',
-        r'\b(?:atlantic\s+multidecadal\s+oscillation|amo)\b',
-        r'\b(?:indian\s+ocean\s+dipole|iod)\b',
-        r'\b(?:southern\s+annular\s+mode|sam)\b',
-        r'\b(?:madden[-\s]?julian\s+oscillation|mjo)\b'
+DOMAIN_SPECIFIC_PATTERNS: dict[str, list] = {
+    "CLIMATE_PHENOMENON": [
+        r"\b(?:el\s+ni[ñn]o|la\s+ni[ñn]a)\b",
+        r"\b(?:arctic\s+oscillation|ao)\b",
+        r"\b(?:north\s+atlantic\s+oscillation|nao)\b",
+        r"\b(?:pacific\s+decadal\s+oscillation|pdo)\b",
+        r"\b(?:atlantic\s+multidecadal\s+oscillation|amo)\b",
+        r"\b(?:indian\s+ocean\s+dipole|iod)\b",
+        r"\b(?:southern\s+annular\s+mode|sam)\b",
+        r"\b(?:madden[-\s]?julian\s+oscillation|mjo)\b",
     ],
-    'CLIMATE_SYSTEM': [
-        r'\b(?:thermohaline\s+circulation|thc)\b',
-        r'\b(?:meridional\s+overturning\s+circulation|moc)\b',
-        r'\b(?:atlantic\s+meridional\s+overturning\s+circulation|amoc)\b',
-        r'\b(?:polar\s+vortex)\b',
-        r'\b(?:jet\s+stream)\b',
-        r'\b(?:hadley\s+cell)\b',
-        r'\b(?:walker\s+circulation)\b'
+    "CLIMATE_SYSTEM": [
+        r"\b(?:thermohaline\s+circulation|thc)\b",
+        r"\b(?:meridional\s+overturning\s+circulation|moc)\b",
+        r"\b(?:atlantic\s+meridional\s+overturning\s+circulation|amoc)\b",
+        r"\b(?:polar\s+vortex)\b",
+        r"\b(?:jet\s+stream)\b",
+        r"\b(?:hadley\s+cell)\b",
+        r"\b(?:walker\s+circulation)\b",
     ],
-    'IMPACT_METRIC': [
-        r'\b(?:degree\s+days?|heating\s+degree\s+days?|cooling\s+degree\s+days?)\b',
-        r'\b(?:growing\s+season\s+length|gsl)\b',
-        r'\b(?:frost\s+days?)\b',
-        r'\b(?:heat\s+index)\b',
-        r'\b(?:wet\s+bulb\s+temperature)\b',
-        r'\b(?:vapor\s+pressure\s+deficit|vpd)\b'
-    ]
+    "IMPACT_METRIC": [
+        r"\b(?:degree\s+days?|heating\s+degree\s+days?|cooling\s+degree\s+days?)\b",
+        r"\b(?:growing\s+season\s+length|gsl)\b",
+        r"\b(?:frost\s+days?)\b",
+        r"\b(?:heat\s+index)\b",
+        r"\b(?:wet\s+bulb\s+temperature)\b",
+        r"\b(?:vapor\s+pressure\s+deficit|vpd)\b",
+    ],
 }
 
 # ===================================================================
 # ENTITY RULER PATTERNS FOR HIGH-CONFIDENCE EXACT MATCHES
 # ===================================================================
 
-ENTITY_RULER_PATTERNS: Dict[str, list] = {
+ENTITY_RULER_PATTERNS: dict[str, list] = {
     "co2": ["CO2", "CO₂", "carbon dioxide"],
     "ch4": ["CH4", "methane"],
     "n2o": ["N2O", "nitrous oxide"],
@@ -460,7 +396,7 @@ ENTITY_RULER_PATTERNS: Dict[str, list] = {
     "fossil_fuels": ["fossil fuels", "fossil fuel"],
     "renewable_energy": ["renewable energy", "clean energy"],
     "carbon_budget": ["carbon budget", "remaining carbon budget"],
-    "paris_agreement": ["Paris Agreement", "Paris Climate Agreement"]
+    "paris_agreement": ["Paris Agreement", "Paris Climate Agreement"],
 }
 
 # ===================================================================
@@ -480,7 +416,7 @@ NLTK_STOPWORDS_LANG = "english"
 # LOGGING CONFIGURATION
 # ===================================================================
 
-LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 LOG_LEVEL = "INFO"
 
 # ===================================================================
@@ -495,20 +431,13 @@ PROGRESS_INTERVAL = 1000
 
 # Confidence thresholds for different extraction methods
 CONFIDENCE_THRESHOLDS = {
-    'entity_ruler': 1.0,
-    'regex': 1.0,
-    'domain_specific': 0.9,
-    'transformers': 0.8,
-    'spacy': 0.7,
-    'nltk': 0.6
+    "entity_ruler": 1.0,
+    "regex": 1.0,
+    "domain_specific": 0.9,
+    "transformers": 0.8,
+    "spacy": 0.7,
+    "nltk": 0.6,
 }
 
 # Priority order for concept merging (higher number = higher priority)
-EXTRACTION_PRIORITY = {
-    'entity_ruler': 6,
-    'regex': 5,
-    'domain_specific': 4,
-    'transformers': 3,
-    'spacy': 2,
-    'nltk': 1
-}
+EXTRACTION_PRIORITY = {"entity_ruler": 6, "regex": 5, "domain_specific": 4, "transformers": 3, "spacy": 2, "nltk": 1}

@@ -5,26 +5,14 @@ Tests the full retrieval pipeline that populates retrieved_data_for_queries.
 
 import json
 import logging
-import os
-import sys
-from typing import List, Dict, Any, Optional
 from datetime import datetime
 from pathlib import Path
-
-# Add the src directory to Python path to import climatefact modules
-sys.path.append("/Users/ariel/workspace/ci0129/proyecto/climatefact/src")
-
-# Import the complete retrieval subgraph
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval import (
-    graph as retrieval_graph,
-)
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval.types import (
-    RetrievalState,
-    RetrievalConfig,
-)
+from typing import Any
 
 from climatefact.evals.metrics.retrieval_evaluator import RetrievalEvaluator
-from metrics.retrieval_metrics import RetrievalMetrics
+
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval import graph as retrieval_graph
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval.types import RetrievalState
 
 # Configure logging
 logging.basicConfig(
@@ -44,10 +32,9 @@ class FullPipelineEvaluationRunner:
     Tests what actually ends up in retrieved_data_for_queries.
     """
 
-    def __init__(
-        self, base_data_path: str = "/Users/ariel/workspace/ci0129/proyecto/data"
-    ):
-        self.base_data_path = Path(base_data_path)
+    def __init__(self, base_data_path: str | None = None):
+        # Use relative paths from the evals directory
+        self.base_data_path = Path(base_data_path) if base_data_path else Path(__file__).parent.parent.parent / "data"
         self.evaluator = RetrievalEvaluator()
 
         # Standard file paths
@@ -83,7 +70,7 @@ class FullPipelineEvaluationRunner:
         logger.info("All required data files found")
         return True
 
-    def load_gold_standard_data(self) -> List[Dict[str, Any]]:
+    def load_gold_standard_data(self) -> list[dict[str, Any]]:
         """
         Load and validate gold standard data from JSONL format.
 
@@ -97,7 +84,7 @@ class FullPipelineEvaluationRunner:
         gold_entries = []
 
         try:
-            with open(self.gold_set_path, "r", encoding="utf-8") as f:
+            with open(self.gold_set_path, encoding="utf-8") as f:
                 for line_num, line in enumerate(f, 1):
                     line = line.strip()
                     if line:  # Skip empty lines
@@ -105,9 +92,7 @@ class FullPipelineEvaluationRunner:
                             entry = json.loads(line)
                             gold_entries.append(entry)
                         except json.JSONDecodeError as e:
-                            logger.warning(
-                                f"Skipping invalid JSON on line {line_num}: {e}"
-                            )
+                            logger.warning(f"Skipping invalid JSON on line {line_num}: {e}")
 
         except Exception as e:
             logger.error(f"Error loading gold set: {e}")
@@ -116,9 +101,7 @@ class FullPipelineEvaluationRunner:
         logger.info(f"Loaded {len(gold_entries)} gold standard entries from JSONL")
         return gold_entries
 
-    def run_full_retrieval_pipeline(
-        self, queries: List[str], k_value: int = 10
-    ) -> List[List[Dict[str, Any]]]:
+    def run_full_retrieval_pipeline(self, queries: list[str], k_value: int = 10) -> list[list[dict[str, Any]]]:
         """
         Run the complete retrieval subgraph pipeline with specified k value.
 
@@ -129,9 +112,7 @@ class FullPipelineEvaluationRunner:
         Returns:
             Retrieved data for queries (output of full pipeline)
         """
-        logger.info(
-            f"Running full retrieval pipeline for {len(queries)} queries with k={k_value}"
-        )
+        logger.info(f"Running full retrieval pipeline for {len(queries)} queries with k={k_value}")
 
         # Prepare initial state
         initial_state: RetrievalState = {
@@ -164,9 +145,7 @@ class FullPipelineEvaluationRunner:
 
             # Extract the final results
             retrieved_data = final_state.get("retrieved_data_for_queries", [])
-            logger.info(
-                f"Pipeline completed. Got results for {len(retrieved_data)} queries"
-            )
+            logger.info(f"Pipeline completed. Got results for {len(retrieved_data)} queries")
 
             # Log summary of results
             for i, query_results in enumerate(retrieved_data):
@@ -183,8 +162,8 @@ class FullPipelineEvaluationRunner:
             return []
 
     def evaluate_full_pipeline(
-        self, gold_entries: List[Dict[str, Any]], k_values: List[int] = [1, 3, 5, 10]
-    ) -> Dict[str, Dict[str, float]]:
+        self, gold_entries: list[dict[str, Any]], k_values: list[int] = [1, 3, 5, 10]
+    ) -> dict[str, dict[str, float]]:
         """
         Evaluate the complete retrieval pipeline for each k value.
 
@@ -198,9 +177,7 @@ class FullPipelineEvaluationRunner:
         logger.info("Starting full pipeline evaluation")
 
         # Extract queries from gold standard
-        queries = [
-            entry.get("claim", "") for entry in gold_entries if entry.get("claim")
-        ]
+        queries = [entry.get("claim", "") for entry in gold_entries if entry.get("claim")]
 
         if not queries:
             logger.error("No valid queries found in gold standard data")
@@ -216,11 +193,7 @@ class FullPipelineEvaluationRunner:
             logger.info(f"=== EVALUATING K={k} ===")
 
             # Run the full retrieval pipeline with this k value, passing gold entries for control case detection
-            all_retrieved_passages = (
-                self.run_full_retrieval_pipeline_with_control_cases(
-                    gold_entries, k_value=k
-                )
-            )
+            all_retrieved_passages = self.run_full_retrieval_pipeline_with_control_cases(gold_entries, k_value=k)
 
             if not all_retrieved_passages:
                 logger.error(f"No results from retrieval pipeline for k={k}")
@@ -247,9 +220,7 @@ class FullPipelineEvaluationRunner:
         logger.info("Completed evaluation for all k values")
         return all_k_results
 
-    def debug_pipeline_results(
-        self, gold_entries: List[Dict[str, Any]], max_queries: int = 5
-    ) -> None:
+    def debug_pipeline_results(self, gold_entries: list[dict[str, Any]], max_queries: int = 5) -> None:
         """
         Debug the pipeline results to understand what's being retrieved.
 
@@ -261,16 +232,14 @@ class FullPipelineEvaluationRunner:
 
         # Limit queries for debugging
         debug_entries = gold_entries[:max_queries]
-        queries = [
-            entry.get("claim", "") for entry in debug_entries if entry.get("claim")
-        ]
+        queries = [entry.get("claim", "") for entry in debug_entries if entry.get("claim")]
 
         # Use k=10 for debugging to see more results
         retrieved_data = self.run_full_retrieval_pipeline(queries, k_value=10)
 
         for i, (entry, query_results) in enumerate(zip(debug_entries, retrieved_data)):
             expected_evidence_id = entry.get("evidence", "")
-            logger.info(f"\n--- Query {i+1} ---")
+            logger.info(f"\n--- Query {i + 1} ---")
             logger.info(f"Claim: {entry.get('claim', '')[:100]}...")
             logger.info(f"Expected evidence ID: {expected_evidence_id}")
             logger.info(f"Retrieved {len(query_results)} passages")
@@ -279,21 +248,19 @@ class FullPipelineEvaluationRunner:
             found_evidence = False
             for j, passage in enumerate(query_results):
                 passage_id = passage.get("id", "NO_ID")
-                logger.info(f"  {j+1}. Passage ID: {passage_id}")
+                logger.info(f"  {j + 1}. Passage ID: {passage_id}")
                 if passage_id == expected_evidence_id:
                     found_evidence = True
-                    logger.info(f"     ✓ FOUND EXPECTED EVIDENCE at position {j+1}")
+                    logger.info(f"     ✓ FOUND EXPECTED EVIDENCE at position {j + 1}")
 
             if not found_evidence and expected_evidence_id:
-                logger.info(
-                    f"     ✗ Expected evidence {expected_evidence_id} not found"
-                )
+                logger.info(f"     ✗ Expected evidence {expected_evidence_id} not found")
 
         logger.info("=== DEBUG COMPLETE ===")
 
     def run_comprehensive_evaluation(
-        self, k_values: List[int] = [1, 3, 5, 10], max_queries: Optional[int] = None
-    ) -> Dict[str, Any]:
+        self, k_values: list[int] = [1, 3, 5, 10], max_queries: int | None = None
+    ) -> dict[str, Any]:
         """
         Run comprehensive evaluation of the full retrieval pipeline.
 
@@ -352,7 +319,7 @@ class FullPipelineEvaluationRunner:
 
         return comprehensive_results
 
-    def save_results(self, results: Dict[str, Any], output_dir: str = "evals/reports"):
+    def save_results(self, results: dict[str, Any], output_dir: str = "evals/reports"):
         """
         Save evaluation results to files.
 
@@ -375,8 +342,8 @@ class FullPipelineEvaluationRunner:
             logger.error(f"Failed to save results: {e}")
 
     def run_full_retrieval_pipeline_with_control_cases(
-        self, gold_entries: List[Dict[str, Any]], k_value: int = 10
-    ) -> List[List[Dict[str, Any]]]:
+        self, gold_entries: list[dict[str, Any]], k_value: int = 10
+    ) -> list[list[dict[str, Any]]]:
         """
         Run the complete retrieval pipeline, handling control cases by returning empty results.
 
@@ -387,9 +354,7 @@ class FullPipelineEvaluationRunner:
         Returns:
             Retrieved data for queries, with empty lists for control cases
         """
-        logger.info(
-            f"Running full retrieval pipeline for {len(gold_entries)} entries with k={k_value}"
-        )
+        logger.info(f"Running full retrieval pipeline for {len(gold_entries)} entries with k={k_value}")
 
         results = []
         regular_queries = []
@@ -402,9 +367,7 @@ class FullPipelineEvaluationRunner:
 
             if evidence is None and entailment is None:
                 # Control case - should return empty results
-                logger.info(
-                    f"Control case detected for entry {gold_entry.get('id', 'unknown')}"
-                )
+                logger.info(f"Control case detected for entry {gold_entry.get('id', 'unknown')}")
                 results.append([])  # Empty results for control case
             else:
                 # Regular query

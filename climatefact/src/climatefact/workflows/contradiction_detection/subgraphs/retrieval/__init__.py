@@ -1,11 +1,19 @@
-from langgraph.graph import StateGraph, START, END
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.retrieve_by_regex import retrieve_by_regex_node
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.retrieve_by_ner import retrieve_by_ner_node
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.retrieve_by_semantic_search import retrieve_by_semantic_search_node
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.combine_and_semantic_search import combine_and_semantic_search_node
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.deduplicate_results import deduplicate_results_node
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval.types import RetrievalState, RetrievalConfig
+from langgraph.graph import END, START, StateGraph
 
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.combine_and_semantic_search import (
+    combine_and_semantic_search_node,
+)
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.deduplicate_results import (
+    deduplicate_results_node,
+)
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.retrieve_by_ner import retrieve_by_ner_node
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.retrieve_by_regex import (
+    retrieve_by_regex_node,
+)
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval.nodes.retrieve_by_semantic_search import (
+    retrieve_by_semantic_search_node,
+)
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval.types import RetrievalConfig, RetrievalState
 
 # Define the workflow
 workflow = StateGraph(RetrievalState, config_schema=RetrievalConfig)

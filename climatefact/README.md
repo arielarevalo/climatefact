@@ -236,7 +236,7 @@ The application uses:
 3. Install dependencies: `poetry install`
 4. Make your changes
 5. Run tests: `poetry run pytest`
-6. Format code: `poetry run black . && poetry run isort .`
+6. Format code: `poetry run ruff format . && poetry run ruff check --fix .`
 7. Submit a pull request
 
 ## License

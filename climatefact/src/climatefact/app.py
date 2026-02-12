@@ -1,5 +1,6 @@
 import streamlit as st
 from langchain_core.runnables import RunnableConfig
+
 from climatefact.workflows.contradiction_detection import graph
 
 # Constant path for passages JSONL file
@@ -15,9 +16,7 @@ def main():
     )
 
     st.title("🌍 ClimateFact - Climate Statement Contradiction Detection")
-    st.markdown(
-        "Enter a climate-related statement to check for contradictions against scientific evidence."
-    )
+    st.markdown("Enter a climate-related statement to check for contradictions against scientific evidence.")
 
     # Text input
     input_text = st.text_area(
@@ -37,7 +36,7 @@ def main():
             configurable={
                 "passages_jsonl_path": PASSAGES_JSONL_PATH,
                 "concept_index_path": CONCEPT_INDEX_PATH,
-                }
+            }
         )
 
         # Initial state
@@ -60,16 +59,14 @@ def main():
                 if result.get("report"):
                     st.markdown(result["report"])
                 else:
-                    st.warning(
-                        "No report generated. Please check your configuration and try again."
-                    )
+                    st.warning("No report generated. Please check your configuration and try again.")
 
                 # Show raw results in expander for debugging
                 with st.expander("🔍 View Raw Results"):
                     st.json(result)
 
             except Exception as e:
-                st.error(f"❌ An error occurred during analysis: {str(e)}")
+                st.error(f"❌ An error occurred during analysis: {e!s}")
                 st.error("Please check your configuration and try again.")
 
 

@@ -1,4 +1,5 @@
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import END, START, StateGraph
+
 from climatefact.workflows.contradiction_detection.subgraphs.generation.nodes.generate_report import generate_report
 from climatefact.workflows.contradiction_detection.subgraphs.generation.types import GenerationState
 

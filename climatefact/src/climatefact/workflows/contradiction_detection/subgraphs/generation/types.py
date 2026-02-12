@@ -1,17 +1,12 @@
-from typing import List, Dict, TypedDict, Any
+from typing import TypedDict
 
-class ContradictionEvidence(TypedDict):
-    contradictory_passage: str
-    source: str
+from climatefact.workflows.contradiction_detection.types import ContradictionResult
 
-class ContradictionResult(TypedDict):
-    sentence: str
-    contradictions: List[ContradictionEvidence]
-    has_contradictions: bool
 
 class GenerationState(TypedDict):
     """
     State for the generation subgraph.
     """
-    contradiction_results: List[ContradictionResult]
+
+    contradiction_results: list[ContradictionResult]
     report: str

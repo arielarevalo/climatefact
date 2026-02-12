@@ -1,11 +1,13 @@
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import END, START, StateGraph
 
-from climatefact.workflows.contradiction_detection.subgraphs.retrieval import graph as retrieval_graph
-from climatefact.workflows.contradiction_detection.subgraphs.generation import graph as generation_graph
-
-from climatefact.workflows.contradiction_detection.nodes.segment_sentences import segment_sentences
 from climatefact.workflows.contradiction_detection.nodes.detect_contradictions import detect_contradictions
-from climatefact.workflows.contradiction_detection.types import ContradictionDetectionState, ContradictionDetectionConfig
+from climatefact.workflows.contradiction_detection.nodes.segment_sentences import segment_sentences
+from climatefact.workflows.contradiction_detection.subgraphs.generation import graph as generation_graph
+from climatefact.workflows.contradiction_detection.subgraphs.retrieval import graph as retrieval_graph
+from climatefact.workflows.contradiction_detection.types import (
+    ContradictionDetectionConfig,
+    ContradictionDetectionState,
+)
 
 workflow = StateGraph(ContradictionDetectionState, config_schema=ContradictionDetectionConfig)
 
@@ -24,4 +26,4 @@ graph = workflow.compile()
 graph.name = "Contradiction Detection Graph"
 
 # Export for LangGraph CLI
-__all__ = ["graph", "ContradictionDetectionState", "ContradictionDetectionConfig"]
+__all__ = ["ContradictionDetectionConfig", "ContradictionDetectionState", "graph"]
