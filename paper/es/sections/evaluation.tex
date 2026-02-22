@@ -12,16 +12,16 @@ Para la evaluación específica del componente de inferencia lógica, cada par a
 
 \subsection{Métricas de evaluación de recuperación}
 
-La calidad del subsistema de recuperación se evalúa mediante métricas estándar de sistemas de recuperación de información, aplicadas para diferentes valores de \textit{k} (número de documentos recuperados):
+La calidad del subsistema de recuperación se evalúa mediante métricas estándar de sistemas de recuperación de información, aplicadas para diferentes valores de $k$ (número de documentos recuperados):
 
 \begin{itemize}
-\item \textbf{Recall@k}: Fracción de evidencia relevante recuperada entre los primeros \textit{k} resultados.
-\item \textbf{Precision@k}: Fracción de documentos relevantes entre los \textit{k} documentos recuperados.
+\item \textbf{Recall@k}: Fracción de evidencia relevante recuperada entre los primeros $k$ resultados.
+\item \textbf{Precision@k}: Fracción de documentos relevantes entre los $k$ documentos recuperados.
 \item \textbf{MRR@k}: Reciprocal rank medio, que mide la posición del primer documento relevante en el ranking.
 \item \textbf{nDCG@k}: Ganancia acumulativa descontada normalizada, que pondera la relevancia según la posición en el ranking.
 \end{itemize}
 
-Estas métricas se calculan de forma independiente para cada estrategia de recuperación (híbrida conceptual, semántica por embeddings, y combinación fusionada) con valores de \textit{k} $\in$ \{1, 3, 5, 10\}, permitiendo evaluar tanto la precisión como la exhaustividad del proceso de recuperación.
+Estas métricas se calculan de forma independiente para cada estrategia de recuperación (híbrida conceptual, semántica por embeddings, y combinación fusionada) con valores de $k \in \{1, 3, 5, 10\}$, permitiendo evaluar tanto la precisión como la exhaustividad del proceso de recuperación.
 
 \subsection{Métricas de evaluación de inferencia lógica}
 

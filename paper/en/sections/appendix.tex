@@ -1,0 +1,24 @@
+\appendix
+\section{Architecture Diagrams}
+\label{sec:appendix-diagrams}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.45\textwidth}{!}{\input{figures/pipeline}}
+\caption{Runtime inference pipeline. Each input statement flows through four stages: segmentation, hybrid retrieval, NLI-based contradiction detection, and report generation.}
+\label{fig:pipeline}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{\input{figures/kb-construction}}
+\caption{Offline knowledge base construction pipeline. The IPCC source document is processed into two artifacts: a vectorized passage store and a hybrid concept index.}
+\label{fig:kb-construction}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.95\textwidth}{!}{\input{figures/retrieval}}
+\caption{Hybrid retrieval subgraph. Three parallel paths---regex, NER, and dense vector---are merged and deduplicated to produce the final evidence set.}
+\label{fig:retrieval}
+\end{figure*}

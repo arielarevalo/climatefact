@@ -1,0 +1,59 @@
+% Diagram 2: Hybrid Retrieval Subgraph
+\begin{tikzpicture}[node distance=0.9cm and 0.5cm]
+  % Input
+  \node[io] (claim) {Input Claim};
+
+  % Three parallel retrievers — evenly spaced row
+  \node[process, below left=1.1cm and 2.0cm of claim] (regex)
+    {Regex Retrieval};
+  \node[process, below=1.1cm of claim] (ner)
+    {NER Retrieval};
+  \node[process, below right=1.1cm and 2.0cm of claim] (dense)
+    {Dense Vector Retrieval};
+
+  % Combine — centered below regex and ner
+  \node[process, below=1.8cm of ner, xshift=-1.0cm] (combine)
+    {Combine + Semantic Reranking};
+
+  % Deduplicate — below combine
+  \node[process, below=1.1cm of combine] (dedup)
+    {Deduplicate by ID};
+
+  % Output
+  \node[io, below=0.9cm of dedup] (out)
+    {Retrieved Passages};
+
+  % Data stores — beside their retrievers
+  \node[datastore, left=0.8cm of regex] (cidx)
+    {\texttt{concept\_index.json}};
+  \node[datastore, right=0.8cm of dense] (pass)
+    {\texttt{passages.jsonl}};
+
+  % Arrows from claim to retrievers
+  \draw[arrow] (claim) -- (regex);
+  \draw[arrow] (claim) -- (ner);
+  \draw[arrow] (claim) -- (dense);
+
+  % Regex and NER to combine
+  \draw[arrow] (regex) -- (combine);
+  \draw[arrow] (ner) -- (combine);
+
+  % Combine to dedup
+  \draw[arrow] (combine) -- (dedup);
+
+  % Dense vector bypass — route along right edge to dedup
+  \draw[arrow, rounded corners=4pt] (dense.south) -- ++(0,-0.5) -| ([xshift=0.5cm]dedup.east) -- (dedup.east);
+
+  % Dedup to output
+  \draw[arrow] (dedup) -- (out);
+
+  % Data store dependencies
+  \draw[-Stealth, dotted, thick, black!50] (cidx) -- (regex);
+  \draw[-Stealth, dotted, thick, black!50, rounded corners=4pt]
+    (cidx.south) -- ++(0,-0.4) -| (ner.south);
+  \draw[-Stealth, dotted, thick, black!50] (pass) -- (dense);
+
+  % Annotations
+  \node[annot, below left=0.05cm and 0.02cm of combine] {top 3};
+  \node[annot, below left=0.05cm and 0.02cm of dedup] {top 10};
+\end{tikzpicture}

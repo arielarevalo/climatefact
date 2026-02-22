@@ -25,13 +25,13 @@ The evaluation of the complete retrieval pipeline, which integrates conceptual h
 \end{tabular}
 \end{table}
 
-For \textit{k=1}, the system achieves a recall of 0.655, indicating that in approximately two-thirds of cases the most relevant document is found in the first ranking position. Precision coincides with recall (0.655) since only one document is considered, resulting in an equivalent F1-score.
+For $k{=}1$, the system achieves a recall of 0.655, indicating that in approximately two-thirds of cases the most relevant document is found in the first ranking position. Precision coincides with recall (0.655) since only one document is considered, resulting in an equivalent F1-score.
 
-When expanding the search to \textit{k=3}, recall increases significantly to 0.865, demonstrating that 86.5\% of relevant evidence is retrieved within the top three results. However, precision decreases to 0.355 due to the inclusion of less relevant documents, resulting in an F1-score of 0.483.
+When expanding the search to $k{=}3$, recall increases significantly to 0.865, demonstrating that 86.5\% of relevant evidence is retrieved within the top three results. However, precision decreases to 0.355 due to the inclusion of less relevant documents, resulting in an F1-score of 0.483.
 
-The trend continues for \textit{k=5} and \textit{k=10}, with recalls of 0.91 and 0.9375 respectively, while precision continues to decrease (0.262 for \textit{k=5} and 0.184 for \textit{k=10}). This inverse relationship between recall and precision is characteristic of retrieval systems that prioritize exhaustiveness over specificity.
+The trend continues for $k{=}5$ and $k{=}10$, with recalls of 0.91 and 0.9375 respectively, while precision continues to decrease (0.262 for $k{=}5$ and 0.184 for $k{=}10$). This inverse relationship between recall and precision is characteristic of retrieval systems that prioritize exhaustiveness over specificity.
 
-The ranking metrics show consistent results: MRR@k stabilizes around 0.76 for values above \textit{k=3}, indicating that the first relevant document is typically found within the top three positions. nDCG@k progresses from 0.655 (\textit{k=1}) to 0.876 (\textit{k=10}), reflecting the system's ability to position relevant documents in high-ranking positions.
+The ranking metrics show consistent results: MRR@k stabilizes around 0.76 for values above $k{=}3$, indicating that the first relevant document is typically found within the top three positions. nDCG@k progresses from 0.655 ($k{=}1$) to 0.876 ($k{=}10$), reflecting the system's ability to position relevant documents in high-ranking positions.
 
 \subsection{Logical inference model performance}
 

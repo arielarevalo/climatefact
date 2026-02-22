@@ -1,0 +1,24 @@
+% Shared TikZ styles for ClimateFact architecture diagrams
+\tikzset{
+  process/.style={
+    rectangle, rounded corners=3pt, draw, thick, fill=black!5,
+    minimum width=2.8cm, minimum height=0.7cm,
+    text centered, font=\footnotesize, text width=2.6cm
+  },
+  datastore/.style={
+    cylinder, draw, thick, shape border rotate=90, aspect=0.15,
+    fill=black!10, minimum width=2.2cm, minimum height=0.8cm,
+    text centered, font=\tiny, text width=2.0cm
+  },
+  io/.style={
+    trapezium, trapezium left angle=75, trapezium right angle=105,
+    draw, thick, fill=white, minimum width=2.0cm, minimum height=0.6cm,
+    text centered, font=\footnotesize
+  },
+  subgraph/.style={
+    rectangle, rounded corners=5pt, draw=black!60, dashed, thick,
+    fill=black!3, inner sep=6pt
+  },
+  arrow/.style={-Stealth, thick, black!80},
+  annot/.style={font=\scriptsize\itshape, text=black!60},
+}

@@ -12,16 +12,16 @@ For the specific evaluation of the logical inference component, each claim-evide
 
 \subsection{Retrieval evaluation metrics}
 
-The quality of the retrieval subsystem is evaluated using standard information retrieval metrics, applied for different values of \textit{k} (number of retrieved documents):
+The quality of the retrieval subsystem is evaluated using standard information retrieval metrics, applied for different values of $k$ (number of retrieved documents):
 
 \begin{itemize}
-\item \textbf{Recall@k}: Fraction of relevant evidence retrieved among the top \textit{k} results.
-\item \textbf{Precision@k}: Fraction of relevant documents among the \textit{k} retrieved documents.
+\item \textbf{Recall@k}: Fraction of relevant evidence retrieved among the top $k$ results.
+\item \textbf{Precision@k}: Fraction of relevant documents among the $k$ retrieved documents.
 \item \textbf{MRR@k}: Mean Reciprocal Rank, which measures the position of the first relevant document in the ranking.
 \item \textbf{nDCG@k}: Normalized Discounted Cumulative Gain, which weights relevance by position in the ranking.
 \end{itemize}
 
-These metrics are calculated independently for each retrieval strategy (conceptual hybrid, semantic embedding, and fused combination) with values of \textit{k} $\in$ \{1, 3, 5, 10\}, allowing evaluation of both the precision and exhaustiveness of the retrieval process.
+These metrics are calculated independently for each retrieval strategy (conceptual hybrid, semantic embedding, and fused combination) with values of $k \in \{1, 3, 5, 10\}$, allowing evaluation of both the precision and exhaustiveness of the retrieval process.
 
 \subsection{Logical inference evaluation metrics}
 

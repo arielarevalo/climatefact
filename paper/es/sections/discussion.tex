@@ -4,15 +4,15 @@ Los resultados experimentales revelan características específicas del sistema 
 
 \subsection{Interpretación de métricas de recuperación}
 
-El comportamiento observado en las métricas de recuperación refleja trade-offs inherentes en sistemas de verificación de hechos. La disminución progresiva de la precisión conforme aumenta \textit{k} (de 0.655 para \textit{k=1} a 0.184 para \textit{k=10}) representa una dilución esperada de la relevancia, donde cada incremento en el número de documentos recuperados introduce resultados menos pertinentes al conjunto final.
+El comportamiento observado en las métricas de recuperación refleja trade-offs inherentes en sistemas de verificación de hechos. La disminución progresiva de la precisión conforme aumenta $k$ (de 0.655 para $k{=}1$ a 0.184 para $k{=}10$) representa una dilución esperada de la relevancia, donde cada incremento en el número de documentos recuperados introduce resultados menos pertinentes al conjunto final.
 
-Sin embargo, desde la perspectiva de la detección de contradicciones, el recall constituye la métrica de mayor importancia práctica. Para invalidar una afirmación climática, basta con identificar \textit{al menos una} contradicción fundamentada en evidencia científica autorizada. Bajo esta premisa, el recall de 0.91 para \textit{k=5} resulta altamente satisfactorio, sugiriendo que el sistema recupera exitosamente evidencia contradictoria en más del 90\% de los casos evaluados.
+Sin embargo, desde la perspectiva de la detección de contradicciones, el recall constituye la métrica de mayor importancia práctica. Para invalidar una afirmación climática, basta con identificar \textit{al menos una} contradicción fundamentada en evidencia científica autorizada. Bajo esta premisa, el recall de 0.91 para $k{=}5$ resulta altamente satisfactorio, sugiriendo que el sistema recupera exitosamente evidencia contradictoria en más del 90\% de los casos evaluados.
 
-La configuración de \textit{k=5} representa un equilibrio eficiente entre exhaustividad de recuperación y carga computacional para el componente NLI posterior. Esta parametrización minimiza el número de inferencias lógicas requeridas mientras mantiene capacidades de recuperación prácticamente óptimas.
+La configuración de $k{=}5$ representa un equilibrio eficiente entre exhaustividad de recuperación y carga computacional para el componente NLI posterior. Esta parametrización minimiza el número de inferencias lógicas requeridas mientras mantiene capacidades de recuperación prácticamente óptimas.
 
 \subsection{Evaluación del ranking híbrido}
 
-El MRR estabilizado en 0.76 para valores de \textit{$k \geq 3$} evidencia la efectividad del pipeline híbrido propuesto. Considerando que la estrategia combina recuperación conceptual por regex, extracción de entidades nombradas, y búsqueda semántica mediante embeddings \texttt{text-embedding-3-small} de OpenAI, este rendimiento sugiere una sinergia positiva entre los métodos de recuperación complementarios.
+El MRR estabilizado en 0.76 para valores de $k \geq 3$ evidencia la efectividad del pipeline híbrido propuesto. Considerando que la estrategia combina recuperación conceptual por regex, extracción de entidades nombradas, y búsqueda semántica mediante embeddings \texttt{text-embedding-3-small} de OpenAI, este rendimiento sugiere una sinergia positiva entre los métodos de recuperación complementarios.
 
 La ausencia de reranking explícito más allá del ordenamiento por similitud semántica limita la interpretabilidad directa de las métricas nDCG obtenidas. No obstante, la progresión consistente del nDCG@k (de 0.655 a 0.876) indica que el sistema posiciona efectivamente documentos relevantes en posiciones superiores del ranking, validando la arquitectura híbrida implementada.
 

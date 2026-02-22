@@ -4,9 +4,10 @@ This work implements an automatic verification system for climate change claims,
 
 \subsection{Embedding-Based Knowledge-Assisted Semantic Verification Pipeline}
 
+Fig.~\ref{fig:pipeline} presents an overview of the runtime inference pipeline, whose stages are described in the following subsections.
 
 \subsubsection{Corpus extraction and preprocessing}
-The Synthesis Report of the Sixth Assessment Report of the IPCC~\cite{ipcc2023}, in PDF format, was used as the knowledge source. To preserve the original semantic structure, the \texttt{MinerU} parser was applied, which transforms documents into Markdown with structural tags. In this way, images and footers were discarded to obtain a cleaner corpus.
+The Synthesis Report of the Sixth Assessment Report of the IPCC~\cite{ipcc2022}, in PDF format, was used as the knowledge source. To preserve the original semantic structure, the \texttt{MinerU} parser was applied, which transforms documents into Markdown with structural tags. In this way, images and footers were discarded to obtain a cleaner corpus.
 
 
 \subsubsection{Coreference resolution and text segmentation}
@@ -15,11 +16,13 @@ Once the content was extracted, it was segmented at the paragraph level and proc
 \subsubsection{Semantic vectorization of the corpus}
 Each sentence was transformed into a 1,536-dimensional embedding using OpenAI's \textbf{text-embedding-3-small} model. These embeddings constitute a semantic knowledge base that encapsulates precise, contextualized scientific information from the IPCC, organized for efficient searches by semantic proximity.
 
+Fig.~\ref{fig:kb-construction} summarizes the offline knowledge base construction pipeline described in the preceding subsections. Its two output artifacts---the passage embeddings and the concept index---serve as the data stores consumed at query time.
+
 \subsubsection{Hybrid concept index construction (regex + NER)}
 In addition to purely semantic search, a concept index was built combining lexical rules and entity recognition. This is executed in three stages: (a) extraction by regular expressions defined on climate ontologies, (b) entity detection with \textit{spaCy} and NLTK, and (c) fusion and deduplication of results with priority given to confidence and text coverage.
 
 \subsubsection{Hybrid retrieval and deduplication}
-At query time, the external claim is analyzed with the same hybrid extractor; the resulting concepts are used as a filter on the index to obtain a relevant subset of sentences. Subsequently, semantic search by embedding similarity is performed within that subset. This combination produces more complete and relevant results.
+As shown in Fig.~\ref{fig:retrieval}, at query time, the external claim is analyzed with the same hybrid extractor; the resulting concepts are used as a filter on the index to obtain a relevant subset of sentences. Subsequently, semantic search by embedding similarity is performed within that subset. This combination produces more complete and relevant results.
 
 \subsubsection{Contextual retrieval by embedding similarity}
 The input claim is converted into an embedding using the same OpenAI model. Then, the cosine similarity between that embedding and all embeddings in the knowledge base is calculated. The most similar sentence is selected as contextual evidence for logical analysis.

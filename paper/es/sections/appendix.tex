@@ -1,0 +1,24 @@
+\appendix
+\section{Diagramas de Arquitectura}
+\label{sec:appendix-diagrams}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.45\textwidth}{!}{\input{figures/pipeline}}
+\caption{Pipeline de inferencia en tiempo de ejecución. Cada afirmación de entrada fluye a través de cuatro etapas: segmentación, recuperación híbrida, detección de contradicciones vía NLI y generación del reporte.}
+\label{fig:pipeline}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.85\textwidth}{!}{\input{figures/kb-construction}}
+\caption{Pipeline de construcción offline de la base de conocimiento. El documento fuente del IPCC se procesa en dos artefactos: un almacén de pasajes vectorizados y un índice híbrido de conceptos.}
+\label{fig:kb-construction}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.95\textwidth}{!}{\input{figures/retrieval}}
+\caption{Subgrafo de recuperación híbrida. Tres rutas paralelas---regex, NER y vectores densos---se fusionan y deduplican para producir el conjunto final de evidencia.}
+\label{fig:retrieval}
+\end{figure*}

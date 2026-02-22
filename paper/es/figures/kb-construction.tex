@@ -1,0 +1,39 @@
+% Diagrama 3: Pipeline de Construcción de la Base de Conocimiento
+\begin{tikzpicture}[node distance=1.1cm]
+  % Cadena lineal
+  \node[io] (pdf) {PDF IPCC AR6};
+  \node[process, below=of pdf] (extract) {Extracción de PDF};
+  \node[process, below=of extract] (coref) {Resolución de correferencias};
+  \node[process, below=of coref] (sent) {Segmentación de oraciones};
+
+  % Bifurcación en dos ramas
+  \node[process, below left=1.1cm and 1.0cm of sent] (vec)
+    {Vectorización semántica};
+  \node[process, below right=1.1cm and 1.0cm of sent] (cidx)
+    {Construcción del índice de conceptos};
+
+  % Almacenes de datos — más grandes para legibilidad
+  \node[datastore, below=0.9cm of vec] (passages)
+    {\texttt{passages.jsonl}};
+  \node[datastore, below=0.9cm of cidx] (index)
+    {\texttt{concept\_index.json}};
+
+  % Flechas — cadena lineal
+  \draw[arrow] (pdf) -- (extract);
+  \draw[arrow] (extract) -- (coref);
+  \draw[arrow] (coref) -- (sent);
+
+  % Flechas de bifurcación
+  \draw[arrow] (sent) -- (vec);
+  \draw[arrow] (sent) -- (cidx);
+
+  % Hacia almacenes de datos
+  \draw[arrow] (vec) -- (passages);
+  \draw[arrow] (cidx) -- (index);
+
+  % Anotaciones
+  \node[annot, right=0.3cm of extract] {MinerU};
+  \node[annot, right=0.3cm of coref] {AllenNLP / SpanBERT-large};
+  \node[annot, left=0.15cm of vec, anchor=east] {text-embedding-3-small};
+  \node[annot, right=0.15cm of cidx, anchor=west] {regex + spaCy + NLTK};
+\end{tikzpicture}

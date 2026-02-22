@@ -4,15 +4,15 @@ The experimental results reveal specific characteristics of the ClimateFact syst
 
 \subsection{Interpretation of retrieval metrics}
 
-The observed behavior in retrieval metrics reflects inherent trade-offs in fact-checking systems. The progressive decrease in precision as \textit{k} increases (from 0.655 for \textit{k=1} to 0.184 for \textit{k=10}) represents an expected dilution of relevance, where each increment in the number of retrieved documents introduces less pertinent results to the final set.
+The observed behavior in retrieval metrics reflects inherent trade-offs in fact-checking systems. The progressive decrease in precision as $k$ increases (from 0.655 for $k{=}1$ to 0.184 for $k{=}10$) represents an expected dilution of relevance, where each increment in the number of retrieved documents introduces less pertinent results to the final set.
 
-However, from the perspective of contradiction detection, recall constitutes the most practically important metric. To invalidate a climate claim, it suffices to identify \textit{at least one} contradiction grounded in authoritative scientific evidence. Under this premise, the recall of 0.91 for \textit{k=5} is highly satisfactory, suggesting that the system successfully retrieves contradictory evidence in more than 90\% of evaluated cases.
+However, from the perspective of contradiction detection, recall constitutes the most practically important metric. To invalidate a climate claim, it suffices to identify \textit{at least one} contradiction grounded in authoritative scientific evidence. Under this premise, the recall of 0.91 for $k{=}5$ is highly satisfactory, suggesting that the system successfully retrieves contradictory evidence in more than 90\% of evaluated cases.
 
-The configuration of \textit{k=5} represents an efficient balance between retrieval exhaustiveness and computational load for the subsequent NLI component. This parameterization minimizes the number of required logical inferences while maintaining practically optimal retrieval capabilities.
+The configuration of $k{=}5$ represents an efficient balance between retrieval exhaustiveness and computational load for the subsequent NLI component. This parameterization minimizes the number of required logical inferences while maintaining practically optimal retrieval capabilities.
 
 \subsection{Hybrid ranking evaluation}
 
-The MRR stabilized at 0.76 for values of \textit{$k \geq 3$} demonstrates the effectiveness of the proposed hybrid pipeline. Considering that the strategy combines conceptual retrieval by regex, named entity extraction, and semantic search through OpenAI's \texttt{text-embedding-3-small} embeddings, this performance suggests a positive synergy between the complementary retrieval methods.
+The MRR stabilized at 0.76 for values of $k \geq 3$ demonstrates the effectiveness of the proposed hybrid pipeline. Considering that the strategy combines conceptual retrieval by regex, named entity extraction, and semantic search through OpenAI's \texttt{text-embedding-3-small} embeddings, this performance suggests a positive synergy between the complementary retrieval methods.
 
 The absence of explicit reranking beyond semantic similarity ordering limits the direct interpretability of the obtained nDCG metrics. Nevertheless, the consistent progression of nDCG@k (from 0.655 to 0.876) indicates that the system effectively positions relevant documents in higher ranking positions, validating the implemented hybrid architecture.
 

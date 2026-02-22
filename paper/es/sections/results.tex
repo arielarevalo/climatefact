@@ -25,13 +25,13 @@ La evaluación del pipeline completo de recuperación, que integra búsqueda hí
 \end{tabular}
 \end{table}
 
-Para \textit{k=1}, el sistema alcanza un recall de 0.655, indicando que en aproximadamente dos tercios de los casos el documento más relevante se encuentra en la primera posición del ranking. La precisión coincide con el recall (0.655) dado que solo se considera un documento, resultando en un F1-score equivalente.
+Para $k{=}1$, el sistema alcanza un recall de 0.655, indicando que en aproximadamente dos tercios de los casos el documento más relevante se encuentra en la primera posición del ranking. La precisión coincide con el recall (0.655) dado que solo se considera un documento, resultando en un F1-score equivalente.
 
-Al expandir la búsqueda a \textit{k=3}, el recall se incrementa significativamente a 0.865, lo que demuestra que el 86.5\% de la evidencia relevante se recupera dentro de los tres primeros resultados. Sin embargo, la precisión desciende a 0.355 debido a la inclusión de documentos menos relevantes, resultando en un F1-score de 0.483.
+Al expandir la búsqueda a $k{=}3$, el recall se incrementa significativamente a 0.865, lo que demuestra que el 86.5\% de la evidencia relevante se recupera dentro de los tres primeros resultados. Sin embargo, la precisión desciende a 0.355 debido a la inclusión de documentos menos relevantes, resultando en un F1-score de 0.483.
 
-La tendencia se mantiene para \textit{k=5} y \textit{k=10}, con recalls de 0.91 y 0.9375 respectivamente, mientras que la precisión continúa disminuyendo (0.262 para \textit{k=5} y 0.184 para \textit{k=10}). Esta relación inversa entre recall y precisión es característica de sistemas de recuperación que priorizan la exhaustividad sobre la especificidad.
+La tendencia se mantiene para $k{=}5$ y $k{=}10$, con recalls de 0.91 y 0.9375 respectivamente, mientras que la precisión continúa disminuyendo (0.262 para $k{=}5$ y 0.184 para $k{=}10$). Esta relación inversa entre recall y precisión es característica de sistemas de recuperación que priorizan la exhaustividad sobre la especificidad.
 
-Las métricas de ranking muestran resultados consistentes: el MRR@k se estabiliza alrededor de 0.76 para valores superiores a \textit{k=3}, indicando que el primer documento relevante típicamente se encuentra en las primeras tres posiciones. El nDCG@k progresa de 0.655 (\textit{k=1}) a 0.876 (\textit{k=10}), reflejando la capacidad del sistema para posicionar documentos relevantes en posiciones altas del ranking.
+Las métricas de ranking muestran resultados consistentes: el MRR@k se estabiliza alrededor de 0.76 para valores superiores a $k{=}3$, indicando que el primer documento relevante típicamente se encuentra en las primeras tres posiciones. El nDCG@k progresa de 0.655 ($k{=}1$) a 0.876 ($k{=}10$), reflejando la capacidad del sistema para posicionar documentos relevantes en posiciones altas del ranking.
 
 \subsection{Rendimiento del modelo de inferencia lógica}
 

@@ -1,0 +1,59 @@
+% Diagrama 2: Subgrafo de Recuperación Híbrida
+\begin{tikzpicture}[node distance=0.9cm and 0.5cm]
+  % Entrada
+  \node[io] (claim) {Afirmación de entrada};
+
+  % Tres recuperadores en paralelo — fila uniforme
+  \node[process, below left=1.1cm and 2.0cm of claim] (regex)
+    {Recuperación por regex};
+  \node[process, below=1.1cm of claim] (ner)
+    {Recuperación por NER};
+  \node[process, below right=1.1cm and 2.0cm of claim] (dense)
+    {Recuperación por vectores densos};
+
+  % Combinar — centrado bajo regex y ner
+  \node[process, below=1.8cm of ner, xshift=-1.0cm] (combine)
+    {Combinar + Reordenamiento semántico};
+
+  % Deduplicar — bajo combinar
+  \node[process, below=1.1cm of combine] (dedup)
+    {Deduplicar por ID};
+
+  % Salida
+  \node[io, below=0.9cm of dedup] (out)
+    {Pasajes recuperados};
+
+  % Almacenes de datos — junto a sus recuperadores
+  \node[datastore, left=0.8cm of regex] (cidx)
+    {\texttt{concept\_index.json}};
+  \node[datastore, right=0.8cm of dense] (pass)
+    {\texttt{passages.jsonl}};
+
+  % Flechas desde afirmación a recuperadores
+  \draw[arrow] (claim) -- (regex);
+  \draw[arrow] (claim) -- (ner);
+  \draw[arrow] (claim) -- (dense);
+
+  % Regex y NER a combinar
+  \draw[arrow] (regex) -- (combine);
+  \draw[arrow] (ner) -- (combine);
+
+  % Combinar a deduplicar
+  \draw[arrow] (combine) -- (dedup);
+
+  % Vectores densos bypass — ruta por el borde derecho
+  \draw[arrow, rounded corners=4pt] (dense.south) -- ++(0,-0.5) -| ([xshift=0.5cm]dedup.east) -- (dedup.east);
+
+  % Deduplicar a salida
+  \draw[arrow] (dedup) -- (out);
+
+  % Dependencias de almacenes de datos
+  \draw[-Stealth, dotted, thick, black!50] (cidx) -- (regex);
+  \draw[-Stealth, dotted, thick, black!50, rounded corners=4pt]
+    (cidx.south) -- ++(0,-0.4) -| (ner.south);
+  \draw[-Stealth, dotted, thick, black!50] (pass) -- (dense);
+
+  % Anotaciones
+  \node[annot, below left=0.05cm and 0.02cm of combine] {top 3};
+  \node[annot, below left=0.05cm and 0.02cm of dedup] {top 10};
+\end{tikzpicture}

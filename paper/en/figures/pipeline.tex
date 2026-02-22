@@ -1,0 +1,23 @@
+% Diagram 1: Runtime Inference Pipeline
+\begin{tikzpicture}[node distance=1.1cm]
+  % Nodes
+  \node[io] (input) {Input Statement};
+  \node[process, below=of input] (seg) {Sentence Segmentation};
+  \node[process, below=of seg, draw=black!60, dashed, fill=black!3] (ret)
+    {Hybrid Retrieval};
+  \node[process, below=of ret] (nli) {Contradiction Detection};
+  \node[process, below=of nli] (gen) {Report Generation};
+  \node[io, below=of gen] (output) {Fact-Check Report};
+
+  % Arrows
+  \draw[arrow] (input) -- (seg);
+  \draw[arrow] (seg) -- (ret);
+  \draw[arrow] (ret) -- (nli);
+  \draw[arrow] (nli) -- (gen);
+  \draw[arrow] (gen) -- (output);
+
+  % Annotations
+  \node[annot, left=0.4cm of ret] {see Fig.~\ref{fig:retrieval}};
+  \node[annot, left=0.4cm of nli] {DeBERTa-Large-MNLI};
+  \node[annot, left=0.4cm of gen] {GPT-4o-mini};
+\end{tikzpicture}
